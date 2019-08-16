@@ -1,16 +1,17 @@
 with
-            TempWithIdentity as (select row_number() over (order by newid()) as i,* from [tempExcel].[dbo].[InputPlusGeofir]),
-            CompletteratOrginal as (select max(i) as nrx, max(ANDEL) as ANDEL, POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, ärndenr from TempWithIdentity
+            TempWithIdentity as (select top 10 row_number() over (order by newid()) as nrx,* from [tempExcel].[dbo].[InputPlusGeofir]),
+
+            CompletteratOrginal as (select max(nrx) as i, max(ANDEL) as ANDEL, POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, ärndenr from TempWithIdentity
                                 group by POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, ärndenr),
 
-            del1 as (select andel, namn, BETECKNING, ärndenr,nrx from CompletteratOrginal),
-            del2 as (select POSTORT, POSTNUMMER, adress,nrx from CompletteratOrginal),
+            del1 as (select andel, namn, BETECKNING, ärndenr,nrx from TempWithIdentity),
+            del2 as (select POSTORT, POSTNUMMER, adress,nrx from TempWithIdentity),
 
             splitAdressCTE AS (SELECT f.*, nrx FROM (SELECT adress, nrx FROM del2) X CROSS APPLY (SELECT Rn=ROW_NUMBER() Over (Partition by X.adress Order by X.adress),X.adress, ExtractedValuesFromNames = value FROM STRING_SPLIT(X.adress, ',') AS D) f),
 
             d3AdressSplitt as (SELECT nrx,adress,C_O = (case when (select max(c2.rn)from splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)) >= 4 then STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn = 1 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '')else null end),Adress2 = (case when (select max(c2.rn)from splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)) >= 4 then STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn = 2 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '')else STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn = 1 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '') end),PostOrt = (case when (select max(c2.rn)from splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)) >= 4 then STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn = 3 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '')else STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn = 2 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '') end),postnr  = (case when (select max(c2.rn)from splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)) >= 4 then STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn >= 4 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '')else STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn = 3 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '') end)FROM splitAdressCTE c1 group by nrx, adress),
 
-            TrimValues as (select d3AdressSplitt.nrx,C_O,ltrim(Adress2) as adress,ltrim(d3AdressSplitt.PostOrt) as PostOrt2,del2.POSToRT,ltrim(postnr)                 as postnr,POSTNUMMER,d3AdressSplitt.adress as orgAdrr from d3AdressSplitt join del2 on d3AdressSplitt.nrx = del2.nrx),
+            TrimValues as (select d3AdressSplitt.nrx,C_O,ltrim(Adress2) as adress,ltrim(d3AdressSplitt.PostOrt) as PostOrt2,del2.POSToRT,ltrim(postnr) as postnr,POSTNUMMER,d3AdressSplitt.adress as orgAdrr from d3AdressSplitt join del2 on d3AdressSplitt.nrx = del2.nrx),
 
             fixPostOrt as (select nrx,C_O,adress,PostOrtZ = case when PostOrt2 like '%' + ress.POSToRT then ress.POSToRT else case when PostOrt2 is null then postort else PostOrt2 end end,postnr =case when PostOrt2 like cast(POSTNUMMER as varchar(255)) + '%' then cast(POSTNUMMER as varchar(255))else case when POSTNUMMER is null then postnr else cast(POSTNUMMER as varchar(255)) end end,ress.POSToRT,orgAdrr from (select nrx,C_O,adress,cast(PostOrt2 as varchar(255)) as PostOrt2,POSToRT,postnr,POSTNUMMER,orgAdrr from TrimValues) as ress),
 
