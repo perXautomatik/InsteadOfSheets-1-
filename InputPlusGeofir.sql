@@ -1,5 +1,8 @@
 
+create or alter view InputPlusGeofir as
 SELECT FNR,
+       BETECKNING,
+       ärndenr,
        CAST(
                CASE
                    WHEN [ANDEL] is null OR [ANDEL] = ''
@@ -32,7 +35,7 @@ SELECT FNR,
                            ELSE SAL_POSTNR
                            END
                    ELSE [FAL_POSTNR]
-                   END AS varchar) as Postnr,
+                   END AS varchar) as POSTNUMMER,
        CAST(
                CASE
                    WHEN ([FAL_POSTORT] is null OR [FAL_POSTORT] = '') AND ([FAL_POSTNR] is null OR [FAL_POSTNR] = '')
@@ -46,7 +49,7 @@ SELECT FNR,
                    END AS varchar) as postOrt
 
 FROM (SELECT input.FNR,
-             input.BETECKNING,input._Ärendenr_,
+             input.BETECKNING,input._Ärendenr_ as ärndenr,
              [UA_UTADR2],
              [UA_UTADR1],
              [UA_LAND],
@@ -61,7 +64,7 @@ FROM (SELECT input.FNR,
              --[AGTYP],
              [SAL_UTADR1]
              --,[UA_UTADR4],--[UA_UTADR3],--[TNMARK],--[SAL_UTADR2],--[SAL_CO],--[NAMN_OMV],--[MNAMN],--[KORTNAMN_OMV],--[FNAMN],--[FAL_UTADR1],--[FAL_CO],--[ENAMN]
-FROM [GISDATA].sde_geofir_gotland.gng.FA_TAXERINGAGARE_V2
+FROM [GISDATA].sde_geofir_gotland.gng.FA_TAXERINGAGARE_V2 as tax
          LEFT JOIN
      (SELECT input.FNR, input.BETECKNING, Hideviken._Ärendenr_
       FROM Hideviken
