@@ -1,56 +1,109 @@
 
   --  create temp table to add an identity column
 IF OBJECT_ID('tempdb..#TempWithIdentity') IS NOT NULL DROP TABLE #TempWithIdentity
-  create table dbo.#TempWithIdentity(i int not null identity(1,1) primary key,POSTORT varchar(255), POSTNUMMER int, ADRESS varchar(255), NAMN varchar(255), andel varchar(255), BETECKNING varchar(255), arndenr varchar(255),   #TempWithIdentity int not null)
-SET IDENTITY_INSERT #TempWithIdentity ON
-    --populate the temporary table
-    insert into dbo.#TempWithIdentity(i,ANDEL, POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, arndenr)
-    select max(TempWithIdentityx.nrx) as i, max(ANDEL) as ANDEL, POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, arndenr from (select top 10 row_number() over (order by newid()) as nrx,* from #TempWithIdentity) [TempWithIdentityx]
-                                group by POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, arndenr
+  create table dbo.#TempWithIdentity(i int not null identity(1,1) primary key,POSTORT varchar(255), POSTNUMMER varchar(255), ADRESS varchar(255), NAMN varchar(255), andel varchar(255), BETECKNING varchar(255), arndenr varchar(255))
 
-    SET IDENTITY_INSERT #TempWithIdentity OFF
+SET IDENTITY_INSERT #TempWithIdentity ON;
 
-  IF OBJECT_ID('tempdb..#del1') IS NOT NULL DROP TABLE #del1
-	create table dbo.#del1(i int not null identity(1,1) primary key,
-	                        NAMN varchar(255),
-	                         andel varchar(255),
-	                           BETECKNING varchar(255),
-	                            arndenr varchar(255),
-	                               #del1 int not null)
-SET IDENTITY_INSERT #del1 ON
-    insert into dbo.#del1(andel, namn, BETECKNING, arndenr, i)
-    select i,
-           NAMN,
-           andel,
-           BETECKNING,
-           arndenr
-    from #tempWithIdentity
-    SET IDENTITY_INSERT #del1 OFF
+INSERT INTO dbo.#TempWithIdentity( i, ANDEL, POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, arndenr )
+	   SELECT top 3 MAX(TempWithIdentityx.nrx) AS i, MAX(ANDEL) AS ANDEL, POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, ärndenr AS arendenr
+	   FROM
+	   (
+		   SELECT ROW_NUMBER() OVER(
+		   ORDER BY NEWID()) AS nrx, *
+		   FROM tempExcel.dbo.InputPlusGeofir
+	   ) AS [TempWithIdentityx]
+	   GROUP BY POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, ärndenr;
 
-   IF OBJECT_ID('tempdb..#del2') IS NOT NULL DROP TABLE #del2
-    create table dbo.#del2 (     i  int not null identity (1,1) primary key,  POSTORT    varchar(255), POSTNUMMER int, ADRESS     varchar(255),  #del2      int not null)
-SET IDENTITY_INSERT #del2 ON
-    insert into dbo.#del2(POSTORT, POSTNUMMER, adress,i)
-    select POSTORT, POSTNUMMER, adress,i
-    from  #tempWithIdentity
-SET IDENTITY_INSERT #del2 OFF
-	;
-  --        union
-   --       select ANDEL, POSTORT, POSTNUMMER, ADRESS, NAMN, BETECKNING, ärndenr
-   --       from (select POSTORT, POSTNUMMER, ADRESS, NAMN, andel, ÄrendeNr4års2019.Fastighet as BETECKNING, ärndenr
-    --            from tempExcel.dbo.årsPåm2019Compl
-    --                     join tempExcel.dbo.ÄrendeNr4års2019
-    --                          on ÄrendeNr4års2019.Fastighet = årsPåm2019Compl.Fastighet) as asdas
-    --
-    --
+SET IDENTITY_INSERT #TempWithIdentity OFF;
 
+IF OBJECT_ID('tempdb..#del1') IS NOT NULL
+BEGIN
+	DROP TABLE #del1
+END;
+
+CREATE TABLE dbo.#del1
+( 
+			 i int NOT NULL IDENTITY(1, 1) PRIMARY KEY, NAMN varchar(255), andel varchar(255), BETECKNING varchar(255), arndenr varchar(255)
+);
+
+SET IDENTITY_INSERT #del1 ON;
+
+INSERT INTO dbo.#del1( i, NAMN, andel, BETECKNING, arndenr )
+	   SELECT i, NAMN, andel, BETECKNING, arndenr
+	   FROM #tempWithIdentity;
+
+SET IDENTITY_INSERT #del1 OFF;
+
+IF OBJECT_ID('tempdb..#del2') IS NOT NULL
+BEGIN
+	DROP TABLE #del2
+END;
+
+CREATE TABLE dbo.#del2
+( 
+			 i int NOT NULL IDENTITY(1, 1) PRIMARY KEY, POSTORT varchar(255), POSTNUMMER varchar(255), ADRESS varchar(255)
+);
+
+SET IDENTITY_INSERT #del2 ON;
+
+INSERT INTO dbo.#del2( POSTORT, POSTNUMMER, adress, i )
+	   SELECT POSTORT, POSTNUMMER, adress, i
+	   FROM #tempWithIdentity;
+
+SET IDENTITY_INSERT #del2 OFF;
+
+IF OBJECT_ID('tempdb..#splitAdressCTE') IS NOT NULL
+BEGIN
+	DROP TABLE #splitAdressCTE
+END;
+
+CREATE TABLE dbo.#splitAdressCTE
+( 
+			 i int , ADRESS varchar(255), Rn varchar(255), ExtractedValuesFromNames varchar(255)
+);
+
+
+--populate the temporary table
+
+INSERT INTO dbo.#splitAdressCTE( i, Rn, adress, ExtractedValuesFromNames )
+	   SELECT Rn, f.adress, ExtractedValuesFromNames, i
+	   FROM
+	   (
+		   SELECT adress, i
+		   FROM #del2
+	   ) AS X
+	   CROSS APPLY
+	   (
+		   SELECT Rn = ROW_NUMBER() OVER(PARTITION BY X.adress
+		   ORDER BY X.adress), X.adress, ExtractedValuesFromNames = value
+		   FROM STRING_SPLIT(X.adress, ',') AS D
+	   ) AS f;
+
+
+
+IF OBJECT_ID('tempdb..#d3AdressSplitt') IS NOT NULL
+BEGIN
+	DROP TABLE #d3AdressSplitt
+END;
+
+
+  CREATE TABLE dbo.#d3AdressSplitt
+  (
+      i                        int,
+      ADRESS                   varchar(255),
+      C_O                      varchar(255),
+      Adress2                  varchar(255),
+      PostOrt                  varchar(255),
+      postnr                   varchar(255)
+  );
+	INSERT INTO dbo.#d3AdressSplitt( i,adress,C_O,Adress2,PostOrt,postnr )
+	SELECT i,adress,C_O = (case when (select max(c2.rn)from #splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)) >= 4 then STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM #splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn = 1 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '')else null end),Adress2 = (case when (select max(c2.rn)from #splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)) >= 4 then STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM #splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn = 2 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '')else STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM #splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn = 1 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '') end),PostOrt = (case when (select max(c2.rn)from #splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)) >= 4 then STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM #splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn = 3 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '')else STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM #splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn = 2 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '') end),postnr  = (case when (select max(c2.rn)from #splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)) >= 4 then STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM #splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn >= 4 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '')else STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM #splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn = 3 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '') end)FROM #splitAdressCTE c1 group by i, adress
+
+;
 
 with
-    splitAdressCTE AS (SELECT f.*, i FROM (SELECT adress, i FROM #del2) X CROSS APPLY (SELECT Rn=ROW_NUMBER() Over (Partition by X.adress Order by X.adress),X.adress, ExtractedValuesFromNames = value FROM STRING_SPLIT(X.adress, ',') AS D) f),
-
-    d3AdressSplitt as (SELECT i,adress,C_O = (case when (select max(c2.rn)from splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)) >= 4 then STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn = 1 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '')else null end),Adress2 = (case when (select max(c2.rn)from splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)) >= 4 then STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn = 2 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '')else STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn = 1 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '') end),PostOrt = (case when (select max(c2.rn)from splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)) >= 4 then STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn = 3 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '')else STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn = 2 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '') end),postnr  = (case when (select max(c2.rn)from splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)) >= 4 then STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn >= 4 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '')else STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' ' FROM splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)and c2.Rn = 3 group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '') end)FROM splitAdressCTE c1 group by i, adress),
-
-    TrimValues as (select d3AdressSplitt.i,C_O,ltrim(Adress2) as adress,ltrim(d3AdressSplitt.PostOrt) as PostOrt2,#del2.POSToRT,ltrim(postnr) as postnr,POSTNUMMER,d3AdressSplitt.adress as orgAdrr from d3AdressSplitt join #del2 on d3AdressSplitt.i = #del2.i),
+    TrimValues as (select #d3AdressSplitt.i,C_O,ltrim(Adress2) as adress,ltrim(#d3AdressSplitt.PostOrt) as PostOrt2,#del2.POSToRT,ltrim(postnr) as postnr,POSTNUMMER,#d3AdressSplitt.adress as orgAdrr from #d3AdressSplitt join #del2 on #d3AdressSplitt.i = #del2.i),
 
     fixPostOrt as (select i,C_O,adress,PostOrtZ = case when PostOrt2 like '%' + ress.POSToRT then ress.POSToRT else case when PostOrt2 is null then postort else PostOrt2 end end,postnr =case when PostOrt2 like cast(POSTNUMMER as varchar(255)) + '%' then cast(POSTNUMMER as varchar(255))else case when POSTNUMMER is null then postnr else cast(POSTNUMMER as varchar(255)) end end,ress.POSToRT,orgAdrr from (select i,C_O,adress,cast(PostOrt2 as varchar(255)) as PostOrt2,POSToRT,postnr,POSTNUMMER,orgAdrr from TrimValues) as ress),
 
@@ -81,3 +134,9 @@ with
 IF OBJECT_ID('tempdb..#TempWithIdentity') IS NOT NULL DROP TABLE #TempWithIdentity
      IF OBJECT_ID('tempdb..#del1') IS NOT NULL DROP TABLE #del1
    IF OBJECT_ID('tempdb..#del2') IS NOT NULL DROP TABLE #del2
+  IF OBJECT_ID('tempdb..#splitAdressCTE') IS NOT NULL DROP TABLE #splitAdressCTE
+
+IF OBJECT_ID('tempdb..#d3AdressSplitt') IS NOT NULL
+BEGIN
+	DROP TABLE #d3AdressSplitt
+END;
