@@ -6,7 +6,7 @@ IF OBJECT_ID('tempdb..#TempWithIdentity') IS NOT NULL DROP TABLE #TempWithIdenti
 SET IDENTITY_INSERT #TempWithIdentity ON;
 
 INSERT INTO dbo.#TempWithIdentity( i, ANDEL, POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, arndenr )
-	   SELECT top 3 MAX(TempWithIdentityx.nrx) AS i, MAX(ANDEL) AS ANDEL, POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, ärndenr AS arendenr
+	   SELECT top 10 MAX(TempWithIdentityx.nrx) AS i, MAX(ANDEL) AS ANDEL, POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, ärndenr AS arendenr
 	   FROM
 	   (
 		   SELECT ROW_NUMBER() OVER(
