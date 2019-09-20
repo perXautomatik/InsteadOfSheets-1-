@@ -88,7 +88,8 @@ IF OBJECT_ID('tempdb..#d3AdressSplitt') IS NOT NULL DROP TABLE #d3AdressSplitt C
 INSERT INTO dbo.#d3AdressSplitt( i,adress,C_O,Adress2,PostOrt,postnr )
 	SELECT i,adress
          , C_O = (case
-                      when (select max(c2.rn) from #splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)) >= 4 then STUFF(
+                      when (select max(c2.rn) from #splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)) >= 4
+                          then STUFF(
                               (SELECT '' + c2.ExtractedValuesFromNames + ' '
                                FROM #splitAdressCTE c2
                                WHERE (c2.ADRESS = c1.ADRESS)
