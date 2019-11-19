@@ -132,19 +132,8 @@ with
     filterSmallOwnersBadAdress as (select fra,C_O,POSTORT,POSTNUMMER,ADRESS,
                                           NAMN,Namn2,BETECKNING,arndenr,RowNum from (select fra,C_O,POSTORT,POSTNUMMER,ADRESS,NAMN,Namn2,BETECKNING,arndenr,RowNum from (select q.fra,q.C_O,q.POSTORT,q.POSTNUMMER,q.ADRESS,q.NAMN,q.Namn2,q.BETECKNING,q.arndenr,ROW_NUMBER() OVER ( PARTITION BY q.arndenr ORDER BY q.fra desc) RowNum from filterBadAdress as q INNER JOIN filterBadAdress thethree ON q.arndenr = thethree.arndenr and q.namn = thethree.namn) X WHERE X.RowNum = 1) as asdasd union select *from (select *from (select q.fra,q.C_O,q.POSTORT,q.POSTNUMMER,q.ADRESS,q.NAMN,q.Namn2,q.BETECKNING,q.arndenr,ROW_NUMBER() OVER ( PARTITION BY q.arndenr ORDER BY q.fra desc ) RowNum from filterBadAdress as q INNER JOIN filterBadAdress thethree ON q.arndenr = thethree.arndenr and q.namn = thethree.namn) X WHERE X.RowNum > 1 and X.RowNum < 4 AND fra > 0.3) as asdasdx)
 
-    select refx.Diarienr,qlx.BETECKNING,qlx.C_O,qlx.POSTORT, qlx.POSTNUMMER,qlx.ADRESS,qlx.NAMN, qlx.Namn2  from (select fra,
-                                                                                                                         C_O,
-                                                                                                                         POSTORT,
-                                                                                                                         POSTNUMMER,
-                                                                                                                         ADRESS,
-                                                                                                                         NAMN,
-                                                                                                                         Namn2,
-                                                                                                                         BETECKNING,
-                                                                                                                         arndenr
-                                                                                                                  from filterSmallOwnersBadAdress where POSTNUMMER <> '') as qlx
-    right outer join (select Diarienr from [tempExcel].[dbo].[FNRKIRDIARENR_FörUtskick]) as refx on
-    refx.Diarienr = qlx.arndenr
-
+    --select distinct refx.Diarienr,qlx.BETECKNING,qlx.C_O,qlx.POSTORT, qlx.POSTNUMMER,qlx.ADRESS,qlx.NAMN, qlx.Namn2  from (select fra, C_O, POSTORT, POSTNUMMER,ADRESS,NAMN,Namn2,BETECKNING,arndenr from filterSmallOwnersBadAdress where POSTNUMMER <> '') as qlx right outer join (select Diarienr from [tempExcel].[dbo].[FNRKIRDIARENR_FörUtskick]) as refx on refx.Diarienr = qlx.arndenr
+	select * from GroupAdresses
 
 
 
