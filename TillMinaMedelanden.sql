@@ -9,14 +9,7 @@ WITH filterBadAdress AS (SELECT (SELECT master.dbo.FracToDec(andel)) 'fra',
                                 PERSORGNR
                          FROM tempExcel.dbo.InputPlusGeofir),
      filterSmallOwnersBadAdress AS (SELECT fra,
-                                           POSTORT,
-                                           POSTNUMMER,
-                                           ADRESS,
-                                           NAMN,
-                                           BETECKNING,
-                                           arndenr,
-                                           PERSORGNR,
-                                           RowNum
+                                           POSTORT,POSTNUMMER,ADRESS,NAMN,BETECKNING,arndenr,PERSORGNR,RowNum
                                     FROM (SELECT fra,
                                                  POSTORT,
                                                  POSTNUMMER,
