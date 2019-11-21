@@ -1,5 +1,29 @@
+   IF OBJECT_ID('tempdb..#FracToDec') IS NOT NULL DROP TABLE FracToDec
+   create table dbo.FracToDec
+    (
+  fra decimal,
+  POSTORT varchar,
+  POSTNUMMER varchar,
+  ADRESS varchar,
+  NAMN varchar,
+  BETECKNING nvarchar,
+  arndenr nvarchar,
+  PERSORGNR nvarchar,
+  RowNum bigint
+)
+
+
+SET IDENTITY_INSERT FracToDec ON;
+
+INSERT INTO dbo.FracToDec(fra, POSTORT, POSTNUMMER, ADRESS, NAMN, BETECKNING, arndenr, PERSORGNR, RowNum)
+        SELECT distinct (SELECT master.dbo.FracToDec(andel)) 'fra',FNR,BETECKNING,ärndenr 'arndenr',Namn,Adress,POSTNUMMER,postOrt,PERSORGNR FROM tempExcel.dbo.InputPlusGeofir;
+
+
+
 WITH
-     FracToDec AS (SELECT distinct (SELECT master.dbo.FracToDec(andel)) 'fra',FNR,BETECKNING,ärndenr 'arndenr',Namn,Adress,POSTNUMMER,postOrt,PERSORGNR FROM tempExcel.dbo.InputPlusGeofir),
+
+
+
 
      RowNrByBeteckning as (SELECT distinct q.fra,q.POSTORT,q.POSTNUMMER,q.ADRESS,q.NAMN,q.BETECKNING,q.arndenr,q.PERSORGNR,
                                          ROW_NUMBER() OVER (PARTITION BY q.BETECKNING ORDER BY q.fra DESC) RowNum
@@ -15,26 +39,17 @@ WITH
 
      filterSmallOwners AS (select distinct * from FilterBad where  FilterBad.RowNum = 1
                                     UNION
-                                    select * from  FilterBad where FilterBad.RowNum > 1 AND FilterBad.RowNum < 4 AND fra > 0.3 ),
+                                    select * from  FilterBad where FilterBad.RowNum > 1 AND FilterBad.RowNum < 4 AND fra > 0.3 )
 
 
-     adressCompl AS (SELECT fra,AdressComplettering.POSTORT,AdressComplettering.POSTNUMMER,AdressComplettering.ADRESS,AdressComplettering.NAMN,BETECKNING,toComplete.arndenr,PERSORGNR,RowNum FROM (SELECT fra,POSTORT,POSTNUMMER,ADRESS,NAMN,BETECKNING,arndenr,PERSORGNR,RowNum FROM RowNrByBeteckning WHERE postOrt = '' OR POSTNUMMER = '' OR Adress = '' OR Namn IS NULL) AS toComplete LEFT OUTER JOIN tempExcel.dbo.AdressComplettering ON AdressComplettering.arndenr = toComplete.arndenr)
+     --,adressCompl AS (SELECT fra,AdressComplettering.POSTORT,AdressComplettering.POSTNUMMER,AdressComplettering.ADRESS,AdressComplettering.NAMN,BETECKNING,toComplete.arndenr,PERSORGNR,RowNum FROM (SELECT fra,POSTORT,POSTNUMMER,ADRESS,NAMN,BETECKNING,arndenr,PERSORGNR,RowNum FROM RowNrByBeteckning WHERE postOrt = '' OR POSTNUMMER = '' OR Adress = '' OR Namn IS NULL) AS toComplete LEFT OUTER JOIN tempExcel.dbo.AdressComplettering ON AdressComplettering.arndenr = toComplete.arndenr)
 
 
 
 
                 --,old as ( SELECT DISTINCT adressCompl.fra,adressCompl.POSTORT,adressCompl.POSTNUMMER,adressCompl.ADRESS,adressCompl.NAMN,adressCompl.BETECKNING,adressCompl.arndenr,adressCompl.PERSORGNR FROM adressCompl UNION(SELECT filterSmallOwnersBadAdress.fra,filterSmallOwnersBadAdress.POSTORT,filterSmallOwnersBadAdress.POSTNUMMER,filterSmallOwnersBadAdress.ADRESS,filterSmallOwnersBadAdress.NAMN,filterSmallOwnersBadAdress.BETECKNING,filterSmallOwnersBadAdress.arndenr,filterSmallOwnersBadAdress.PERSORGNR FROM filterSmallOwnersBadAdress WHERE postOrt <> '' AND POSTNUMMER <> '' AND Adress <> '' AND Namn IS NOT NULL)ORDER BY arndenr)
 
-select POSTORT,
-       POSTNUMMER,
-       ADRESS,
-       NAMN,
-       STUFF((
-            SELECT ',' + CAST(innerTable.BETECKNING AS nvarchar(50))
-            FROM filterSmallOwners AS innerTable
-            WHERE innerTable.Namn = ressult.Namn
+-- select POSTORT,POSTNUMMER,ADRESS,NAMN,STUFF((SELECT ',' + CAST(innerTable.BETECKNING AS nvarchar(50))FROM filterSmallOwners AS innerTable WHERE innerTable.Namn = ressult.Namn FOR XML PATH('')),1,1,'') AS Ids from filterSmallOwners ressult group by namn, POSTORT, POSTNUMMER, ADRESS
 
-            FOR XML PATH('')
 
-            ),1,1,'') AS Ids
-from filterSmallOwners ressult group by namn, POSTORT, POSTNUMMER, ADRESS
+select * from filterSmallOwners

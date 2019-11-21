@@ -1,6 +1,6 @@
 
 
-   IF OBJECT_ID('tempdb..#TempWithIdentity') IS NOT NULL DROP TABLE #TempWithIdentity create table dbo.#TempWithIdentity
+   IF OBJECT_ID('tempdb..#TempWithIdentity') IS NOT NULL DROP TABLE tableWithRowNumbre create table dbo.tableWithRowNumbre
     (
         i          int not null identity (1,1) primary key,
         POSTORT    varchar(255),
@@ -12,19 +12,17 @@
         arndenr    varchar(255)
     )
 
-SET IDENTITY_INSERT #TempWithIdentity ON;
+SET IDENTITY_INSERT tableWithRowNumbre ON;
 
-INSERT INTO dbo.#TempWithIdentity( i, ANDEL, POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, arndenr )
-	   SELECT MAX(TempWithIdentityx.nrx) AS i, MAX(ANDEL) AS ANDEL, POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, ärndenr AS arendenr
+INSERT INTO dbo.tableWithRowNumbre( i, ANDEL, POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, arndenr )
+        SELECT MAX(TempWithIdentityx.nrx) AS i, MAX(ANDEL) AS ANDEL, POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, ärndenr AS arendenr
 	   FROM
 	   (
-		   SELECT ROW_NUMBER() OVER(
-		   ORDER BY NEWID()) AS nrx, *
-		   FROM tempExcel.dbo.InputPlusGeofir
+		   SELECT ROW_NUMBER() OVER(ORDER BY NEWID()) AS nrx, * FROM tempExcel.dbo.InputPlusGeofir
 	   ) AS [TempWithIdentityx]
 	   GROUP BY POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, ärndenr;
 
-SET IDENTITY_INSERT #TempWithIdentity OFF;
+SET IDENTITY_INSERT tableWithRowNumbre OFF;
 
 IF OBJECT_ID('tempdb..#del1') IS NOT NULL DROP TABLE #del1 CREATE TABLE dbo.#del1
 (
@@ -35,7 +33,7 @@ SET IDENTITY_INSERT #del1 ON;
 
 INSERT INTO dbo.#del1( i, NAMN, andel, BETECKNING, arndenr )
 	   SELECT i, NAMN, andel, BETECKNING, arndenr
-	   FROM #tempWithIdentity;
+	   FROM tableWithRowNumbre;
 
 SET IDENTITY_INSERT #del1 OFF;
 
@@ -50,7 +48,7 @@ SET IDENTITY_INSERT #del2 ON;
 
 INSERT INTO dbo.#del2( POSTORT, POSTNUMMER, adress, i )
 	   SELECT POSTORT, POSTNUMMER, adress, i
-	   FROM #tempWithIdentity;
+	   FROM tableWithRowNumbre;
 
 SET IDENTITY_INSERT #del2 OFF;
 
@@ -133,11 +131,11 @@ with
                                           NAMN,Namn2,BETECKNING,arndenr,RowNum from (select fra,C_O,POSTORT,POSTNUMMER,ADRESS,NAMN,Namn2,BETECKNING,arndenr,RowNum from (select q.fra,q.C_O,q.POSTORT,q.POSTNUMMER,q.ADRESS,q.NAMN,q.Namn2,q.BETECKNING,q.arndenr,ROW_NUMBER() OVER ( PARTITION BY q.arndenr ORDER BY q.fra desc) RowNum from filterBadAdress as q INNER JOIN filterBadAdress thethree ON q.arndenr = thethree.arndenr and q.namn = thethree.namn) X WHERE X.RowNum = 1) as asdasd union select *from (select *from (select q.fra,q.C_O,q.POSTORT,q.POSTNUMMER,q.ADRESS,q.NAMN,q.Namn2,q.BETECKNING,q.arndenr,ROW_NUMBER() OVER ( PARTITION BY q.arndenr ORDER BY q.fra desc ) RowNum from filterBadAdress as q INNER JOIN filterBadAdress thethree ON q.arndenr = thethree.arndenr and q.namn = thethree.namn) X WHERE X.RowNum > 1 and X.RowNum < 4 AND fra > 0.3) as asdasdx)
 
     --select distinct refx.Diarienr,qlx.BETECKNING,qlx.C_O,qlx.POSTORT, qlx.POSTNUMMER,qlx.ADRESS,qlx.NAMN, qlx.Namn2  from (select fra, C_O, POSTORT, POSTNUMMER,ADRESS,NAMN,Namn2,BETECKNING,arndenr from filterSmallOwnersBadAdress where POSTNUMMER <> '') as qlx right outer join (select Diarienr from [tempExcel].[dbo].[FNRKIRDIARENR_FörUtskick]) as refx on refx.Diarienr = qlx.arndenr
-	select * from GroupAdresses
+	select * from tableWithRowNumbre
 
 
 
-IF OBJECT_ID('tempdb..#TempWithIdentity') IS NOT NULL DROP TABLE #TempWithIdentity
+IF OBJECT_ID('tempdb..#TempWithIdentity') IS NOT NULL DROP TABLE tableWithRowNumbre
      IF OBJECT_ID('tempdb..#del1') IS NOT NULL DROP TABLE #del1
    IF OBJECT_ID('tempdb..#del2') IS NOT NULL DROP TABLE #del2
   IF OBJECT_ID('tempdb..#splitAdressCTE') IS NOT NULL DROP TABLE #splitAdressCTE
