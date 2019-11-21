@@ -1,16 +1,5 @@
    IF OBJECT_ID('tempdb..#FracToDec') IS NOT NULL DROP TABLE FracToDec
-   create table dbo.FracToDec
-    (
-  fra decimal,
-  POSTORT varchar,
-  POSTNUMMER varchar,
-  ADRESS varchar,
-  NAMN varchar,
-  BETECKNING nvarchar,
-  arndenr nvarchar,
-  PERSORGNR nvarchar,
-  RowNum bigint
-)
+   create table dbo.FracToDec(fra decimal,POSTORT varchar,POSTNUMMER varchar,ADRESS varchar,NAMN varchar,BETECKNING nvarchar,arndenr nvarchar,PERSORGNR nvarchar,RowNum bigint)
 
 
 SET IDENTITY_INSERT FracToDec ON;
