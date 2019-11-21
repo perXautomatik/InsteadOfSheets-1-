@@ -18,10 +18,7 @@ WITH
                                     select * from  FilterBad where FilterBad.RowNum > 1 AND FilterBad.RowNum < 4 AND fra > 0.3 ),
 
 
-     adressCompl AS (SELECT fra,AdressComplettering.POSTORT,AdressComplettering.POSTNUMMER,AdressComplettering.ADRESS,AdressComplettering.NAMN,BETECKNING,toComplete.arndenr,PERSORGNR,RowNum
-                     FROM (SELECT fra,POSTORT,POSTNUMMER,ADRESS,NAMN,BETECKNING,arndenr,PERSORGNR,RowNum
-                           FROM RowNrByBeteckning WHERE postOrt = '' OR POSTNUMMER = '' OR Adress = '' OR Namn IS NULL) AS toComplete LEFT OUTER JOIN tempExcel.dbo.AdressComplettering ON AdressComplettering.arndenr = toComplete.arndenr)
-
+     adressCompl AS (SELECT fra,AdressComplettering.POSTORT,AdressComplettering.POSTNUMMER,AdressComplettering.ADRESS,AdressComplettering.NAMN,BETECKNING,toComplete.arndenr,PERSORGNR,RowNum FROM (SELECT fra,POSTORT,POSTNUMMER,ADRESS,NAMN,BETECKNING,arndenr,PERSORGNR,RowNum FROM RowNrByBeteckning WHERE postOrt = '' OR POSTNUMMER = '' OR Adress = '' OR Namn IS NULL) AS toComplete LEFT OUTER JOIN tempExcel.dbo.AdressComplettering ON AdressComplettering.arndenr = toComplete.arndenr)
 
 
 
