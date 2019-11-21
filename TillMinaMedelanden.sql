@@ -1,10 +1,22 @@
-   IF OBJECT_ID('tempdb..#FracToDec') IS NOT NULL DROP TABLE FracToDec
-   create table dbo.FracToDec(fra decimal,POSTORT varchar,POSTNUMMER varchar,ADRESS varchar,NAMN varchar,BETECKNING nvarchar,arndenr nvarchar,PERSORGNR nvarchar,RowNum bigint)
+   IF OBJECT_ID('tempdb..#FracToDec6','U') IS NOT NULL
+       DROP TABLE FracToDec6
 
+   create table dbo.FracToDec6
+    (
+  fra decimal,
+  POSTORT varchar(255),
+  POSTNUMMER varchar(255),
+  ADRESS varchar(255),
+  NAMN varchar(255),
+  BETECKNING nvarchar(255),
+  arndenr nvarchar(255),
+  PERSORGNR nvarchar(255),
+  RowNum bigint
+);
 
-SET IDENTITY_INSERT FracToDec ON;
+--SET IDENTITY_INSERT FracToDec3 ON;
 
-INSERT INTO dbo.FracToDec(fra, POSTORT, POSTNUMMER, ADRESS, NAMN, BETECKNING, arndenr, PERSORGNR, RowNum)
+INSERT INTO dbo.FracToDec6(fra, POSTORT, POSTNUMMER, ADRESS, NAMN, BETECKNING, arndenr, PERSORGNR, RowNum)
         SELECT distinct (SELECT master.dbo.FracToDec(andel)) 'fra',FNR,BETECKNING,ärndenr 'arndenr',Namn,Adress,POSTNUMMER,postOrt,PERSORGNR FROM tempExcel.dbo.InputPlusGeofir;
 
 
@@ -16,7 +28,7 @@ WITH
 
      RowNrByBeteckning as (SELECT distinct q.fra,q.POSTORT,q.POSTNUMMER,q.ADRESS,q.NAMN,q.BETECKNING,q.arndenr,q.PERSORGNR,
                                          ROW_NUMBER() OVER (PARTITION BY q.BETECKNING ORDER BY q.fra DESC) RowNum
-                                  FROM FracToDec AS q INNER JOIN FracToDec thethree ON q.BETECKNING = thethree.BETECKNING AND q.namn = thethree.namn),
+                                  FROM FracToDec6 AS q INNER JOIN FracToDec6 thethree ON q.BETECKNING = thethree.BETECKNING AND q.namn = thethree.namn),
 
      FilterBad as (SELECT fra,POSTORT,POSTNUMMER,ADRESS,NAMN,BETECKNING,arndenr,PERSORGNR,RowNum
                             FROM RowNrByBeteckning
