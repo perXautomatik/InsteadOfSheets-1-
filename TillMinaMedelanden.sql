@@ -1,7 +1,7 @@
    IF OBJECT_ID('master.dbo.FracToDec8','U') IS NOT NULL
-       DROP TABLE FracToDec8
+       DROP TABLE master.dbo.FracToDec8
 
-   create table dbo.FracToDec8
+   create table master.dbo.FracToDec8
     (
   fra decimal(14,6),
   POSTORT varchar(255),
@@ -15,14 +15,14 @@
 
 --SET IDENTITY_INSERT FracToDec3 ON;
 
-INSERT INTO dbo.FracToDec8(fra, POSTORT, POSTNUMMER, ADRESS, NAMN, BETECKNING, arndenr, PERSORGNR)
+INSERT INTO master.dbo.FracToDec8(fra, POSTORT, POSTNUMMER, ADRESS, NAMN, BETECKNING, arndenr, PERSORGNR)
         SELECT distinct (SELECT master.dbo.FracToDec(andel)) 'fra',POSTORT, POSTNUMMER, ADRESS, NAMN, BETECKNING, tempExcel.dbo.InputPlusGeofir.ärndenr, PERSORGNR FROM tempExcel.dbo.InputPlusGeofir;
 
 
    IF OBJECT_ID('master.dbo.RowNrByBeteckning','U') IS NOT NULL
-       DROP TABLE RowNrByBeteckning
+       DROP TABLE master.dbo.RowNrByBeteckning
 
-   create table dbo.RowNrByBeteckning
+   create table master.dbo.RowNrByBeteckning
     (
   fra decimal(14,6),
   POSTORT varchar(255),
@@ -35,10 +35,19 @@ INSERT INTO dbo.FracToDec8(fra, POSTORT, POSTNUMMER, ADRESS, NAMN, BETECKNING, a
   RowNum bigint
 );
 
-INSERT INTO dbo.RowNrByBeteckning(fra, POSTORT, POSTNUMMER, ADRESS, NAMN, BETECKNING, arndenr, PERSORGNR,RowNum)
-		SELECT distinct q.fra,q.POSTORT,q.POSTNUMMER,q.ADRESS,q.NAMN,q.BETECKNING,q.arndenr,q.PERSORGNR,
-                                         ROW_NUMBER() OVER (PARTITION BY q.BETECKNING ORDER BY q.fra DESC) RowNum
-                                  FROM FracToDec8 AS q INNER JOIN FracToDec8 thethree ON q.BETECKNING = thethree.BETECKNING AND q.namn = thethree.namn;
+INSERT INTO master.dbo.RowNrByBeteckning(   fra,            POSTORT,            POSTNUMMER,             ADRESS,             NAMN,           BETECKNING,             arndenr,            PERSORGNR,          RowNum)
+		SELECT distinct                     theTab.fra,     theTab.POSTORT,     theTab.POSTNUMMER,      theTab.ADRESS,      theTab.NAMN,    theTab.BETECKNING,      theTab.arndenr,     theTab.PERSORGNR,
+             ROW_NUMBER() OVER (PARTITION BY theTab.BETECKNING ORDER BY theTab.fra DESC) RowNum
+                  FROM FracToDec8 AS theTab INNER JOIN FracToDec8 innerTable ON
+                      theTab.BETECKNING = innerTable.BETECKNING and
+                      --DUE TO sql treating null = null as unknown
+
+                       (case when theTab.NAMN is null then
+                       innerTable.NAMN is null
+                        when innerTable.NAMN is null then
+                        theTab.NAMN is null
+                        else
+                        theTab.NAMN = innerTable.NAMN end  );
 
 WITH
      FilterBad as (SELECT fra,POSTORT,POSTNUMMER,ADRESS,NAMN,BETECKNING,arndenr,PERSORGNR,RowNum
@@ -59,7 +68,7 @@ WITH
 	,stuffNamn as ( select arndenr,POSTORT,POSTNUMMER,ADRESS,STUFF((SELECT ', ' + CAST(innerTable.Namn AS nvarchar(50)) FROM stuffBeteckning AS innerTable WHERE innerTable.Beteckning = ressult.Beteckning AND innerTable.ADRESS = ressult.ADRESS order by Beteckning FOR XML PATH('')),1,1,'') AS NAMN,Beteckning from stuffBeteckning ressult group by Beteckning, POSTORT, POSTNUMMER, ADRESS,arndenr)
    
    
- select * from stuffNamn order by Beteckning
+ select * from RowNrByBeteckning order by Beteckning
    
    IF OBJECT_ID('master..#FracToDec8','U') IS NOT NULL
-       DROP TABLE FracToDec8
+       DROP TABLE master.dbo.FracToDec8
