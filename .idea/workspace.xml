@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d1eb6535-42c0-430d-bf3d-568ef8000be8" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ExecutionTargetDialog">
+    <checked>
+      <node key="6f5acbc7-c2be-4b8b-a77a-ea78581ca491" />
+    </checked>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/InsteadOfSheets (1).sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-493">
+              <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/newConsept.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/TillMinaMedelanden.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>,stuffNamn as(select arndenr,POSTORT,POSTNUMMER,ADRESS,STUFF((SELECT ', ' + CAST(innerTable.Namn AS nvarchar(50)) FROM stuffBeteckning AS innerTable WHERE innerTable.Beteckning = ressult.Beteckning AND innerTable.ADRESS = ressult.ADRESS order by Beteckning FOR XML PATH('')),1,1,'') AS NAMN,Beteckning from stuffBeteckning ressult group by Beteckning, POSTORT, POSTNUMMER, ADRESS,arndenr)</find>
+      <find>stuffBeteckning</find>
+      <find>theTab</find>
+      <find>Namn</find>
+      <find>my_Table</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>valjLangstArendeNr</replace>
+      <replace>ressult</replace>
+      <replace>Adress</replace>
+      <replace>giveRowNumber</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/newConsept.sql" />
+        <option value="$PROJECT_DIR$/TillMinaMedelanden.sql" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectConfigurationFiles">
+    <option name="files">
+      <list>
+        <option value="$PROJECT_DIR$/.idea/InsteadOfSheets (1).iml" />
+        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
+        <option value="$PROJECT_DIR$/.idea/dataSources.xml" />
+        <option value="$PROJECT_DIR$/.idea/modules.xml" />
+        <option value="$PROJECT_DIR$/.idea/google-java-format.xml" />
+        <option value="$PROJECT_DIR$/.idea/palantir-java-format.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="427" />
+    <option name="y" value="112" />
+    <option name="width" value="1094" />
+    <option name="height" value="735" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="InsteadOfSheets (1)" type="e2918438:DataGripProjectViewPane$1$1" />
+              <item name="InsteadOfSheets (1)" type="252d1985:DataGripProjectViewPane$1$1$1" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="DBE.Init.BalloonShown" value="true" />
+    <property name="DatabaseDriversLRU" value="sqlserver" />
+    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="true" />
+    <property name="database.console.LAST_STATE" value="true" />
+    <property name="database.data.extractors.current.id" value="Tab-separated (TSV)_id" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Ny mapp/måns behöver adresser mergade" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="PsiViewer.ProjectComponent">
+    <option name="HIGHLIGHT" value="false" />
+    <option name="FILTER_WHITESPACE" value="false" />
+    <option name="SHOW_PROPERTIES" value="true" />
+    <option name="SPLIT_DIVIDER_POSITION" value="300" />
+    <option name="AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="AUTOSCROLL_FROM_SOURCE" value="false" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d1eb6535-42c0-430d-bf3d-568ef8000be8" name="Default Changelist" comment="" />
+      <created>1574180874444</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1574180874444</updated>
+    </task>
+    <task id="LOCAL-00001" summary="git integrated Datagrip">
+      <created>1574181149784</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1574181149784</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fixing preformance issue">
+      <created>1574436131402</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1574436131403</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Stable, but should be a new branch">
+      <created>1574436863456</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1574436863456</updated>
+    </task>
+    <task id="LOCAL-00004" summary="bit of reformating">
+      <created>1574437008270</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1574437008270</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Database" order="0" visible="true" weight="0.04904051" />
+      <window_info id="Favorites" order="1" side_tool="true" />
+      <window_info active="true" anchor="bottom" id="Database Console" order="0" visible="true" weight="0.58111113" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Find" order="2" weight="0.3288889" />
+      <window_info anchor="bottom" id="Run" order="3" weight="0.3282313" />
+      <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="5" weight="0.32777777" />
+      <window_info anchor="bottom" id="Version Control" order="6" weight="0.08444444" />
+      <window_info anchor="bottom" id="SonarLint" order="7" />
+      <window_info anchor="bottom" id="Tool Output" order="8" />
+      <window_info anchor="bottom" id="Sourcery" order="9" />
+      <window_info anchor="bottom" id="GraphQL" order="10" />
+      <window_info anchor="bottom" id="ContextBuddy" order="11" />
+      <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Graph Database Console" order="13" />
+      <window_info anchor="bottom" id="Debug" order="14" />
+      <window_info anchor="bottom" id="TaskBrowser" order="15" />
+      <window_info anchor="bottom" id="ANTLR Preview" order="16" />
+      <window_info anchor="bottom" id="Code Cleaner" order="17" />
+      <window_info anchor="bottom" id="Event Log" order="18" />
+      <window_info anchor="right" content_ui="combo" id="Project" order="0" visible="true" weight="0.019189766" />
+      <window_info anchor="right" id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Graph Database" order="2" />
+      <window_info anchor="right" id="PsiViewer" order="3" />
+      <window_info anchor="right" id="PlantUML" order="4" />
+      <window_info anchor="right" id="JWT" order="5" />
+      <window_info anchor="right" id="Call Graph" order="6" side_tool="true" />
+    </layout>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
+    <MESSAGE value="fixing preformance issue" />
+    <MESSAGE value="Stable, but should be a new branch" />
+    <MESSAGE value="bit of reformating" />
+    <option name="LAST_COMMIT_MESSAGE" value="bit of reformating" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="das://6cfacdb4-5d47-4859-b85b-7b2ce07efa71/database/tempExcel/schema/dbo/table/BladObjRening" />
+    <entry file="das://6cfacdb4-5d47-4859-b85b-7b2ce07efa71/database/tempExcel/schema/dbo/table/BladObjTank" />
+    <entry file="das://6cfacdb4-5d47-4859-b85b-7b2ce07efa71/database/tempExcel/schema/dbo/table/BladObjVerksamhetsUtövare" />
+    <entry file="das://6cfacdb4-5d47-4859-b85b-7b2ce07efa71/database/tempExcel/schema/dbo/table/BladObjÄrenden" />
+    <entry file="das://6cfacdb4-5d47-4859-b85b-7b2ce07efa71/database/tempExcel/schema/dbo/table/Blad1ObjIDObjNamn" />
+    <entry file="das://6cfacdb4-5d47-4859-b85b-7b2ce07efa71/database/tempExcel/schema/dbo/table/BladObjSlamskilj" />
+    <entry file="uml://DATABASE/6cfacdb4-5d47-4859-b85b-7b2ce07efa71.SCHEMA:tempExcel.dbo">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>DATABASE</ID>
+          <OriginalElement>6cfacdb4-5d47-4859-b85b-7b2ce07efa71.SCHEMA:tempExcel.dbo</OriginalElement>
+          <nodes>
+            <node x="1840.5" y="600.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3</node>
+            <node x="3539.0" y="827.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.FakturaMottagare</node>
+            <node x="1608.0" y="860.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.Blad1ObjIDObjNamn</node>
+            <node x="1098.0" y="838.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjPathDiaLöpnr</node>
+            <node x="246.0" y="1065.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.4årsPåmvår2019</node>
+            <node x="0.0" y="0.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.SaraStatistic</node>
+            <node x="2752.0" y="805.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjSlamskilj</node>
+            <node x="0.0" y="860.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjÄrenden</node>
+            <node x="1200.0" y="1065.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.NuÖppnaÄrende</node>
+            <node x="492.0" y="772.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjRening</node>
+            <node x="2521.0" y="860.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.bladObjKoord</node>
+            <node x="2003.0" y="849.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjFastigheter</node>
+            <node x="3070.0" y="805.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjTank</node>
+            <node x="0.0" y="1065.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjPathDiaLöp</node>
+            <node x="793.0" y="805.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjPåkoppladFastighet</node>
+            <node x="771.0" y="1065.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.vision2</node>
+            <node x="993.0" y="1065.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjektENTimDeb</node>
+            <node x="2229.0" y="816.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjHuvudFast</node>
+            <node x="3357.0" y="860.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BlodObjTimdeb</node>
+            <node x="211.0" y="849.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjVerksamhetsUtövare</node>
+            <node x="534.0" y="1065.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.w32</node>
+            <node x="1305.0" y="827.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjeInventer</node>
+            <node x="1803.0" y="860.0">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjeAnteck</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjVerksamhetsUtövare" target="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3">
+              <point x="0.0" y="-47.0" />
+              <point x="341.5" y="702.0" />
+              <point x="1851.0" y="702.0" />
+              <point x="-42.0" y="36.0" />
+            </edge>
+            <edge source="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.FakturaMottagare" target="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3">
+              <point x="0.0" y="-69.0" />
+              <point x="3692.0" y="692.0" />
+              <point x="1942.0" y="692.0" />
+              <point x="49.0" y="36.0" />
+            </edge>
+            <edge source="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjTank" target="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3">
+              <point x="0.0" y="-91.0" />
+              <point x="3203.5" y="712.0" />
+              <point x="1928.0" y="712.0" />
+              <point x="35.0" y="36.0" />
+            </edge>
+            <edge source="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjPathDiaLöpnr" target="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3">
+              <point x="0.0" y="-58.0" />
+              <point x="1191.5" y="732.0" />
+              <point x="1872.0" y="732.0" />
+              <point x="-21.0" y="36.0" />
+            </edge>
+            <edge source="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.Blad1ObjIDObjNamn" target="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3">
+              <point x="0.0" y="-36.0" />
+              <point x="1695.5" y="752.0" />
+              <point x="1886.0" y="752.0" />
+              <point x="-7.0" y="36.0" />
+            </edge>
+            <edge source="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjeInventer" target="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3">
+              <point x="0.0" y="-69.0" />
+              <point x="1446.5" y="742.0" />
+              <point x="1879.0" y="742.0" />
+              <point x="-14.0" y="36.0" />
+            </edge>
+            <edge source="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjSlamskilj" target="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3">
+              <point x="0.0" y="-91.0" />
+              <point x="2901.0" y="722.0" />
+              <point x="1921.0" y="722.0" />
+              <point x="28.0" y="36.0" />
+            </edge>
+            <edge source="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjÄrenden" target="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3">
+              <point x="0.0" y="-36.0" />
+              <point x="95.5" y="692.0" />
+              <point x="1844.0" y="692.0" />
+              <point x="-49.0" y="36.0" />
+            </edge>
+            <edge source="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjPåkoppladFastighet" target="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3">
+              <point x="0.0" y="-91.0" />
+              <point x="935.5" y="722.0" />
+              <point x="1865.0" y="722.0" />
+              <point x="-28.0" y="36.0" />
+            </edge>
+            <edge source="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjRening" target="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3">
+              <point x="0.0" y="-124.0" />
+              <point x="632.5" y="712.0" />
+              <point x="1858.0" y="712.0" />
+              <point x="-35.0" y="36.0" />
+            </edge>
+            <edge source="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjHuvudFast" target="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3">
+              <point x="0.0" y="-80.0" />
+              <point x="2365.0" y="742.0" />
+              <point x="1907.0" y="742.0" />
+              <point x="14.0" y="36.0" />
+            </edge>
+            <edge source="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BlodObjTimdeb" target="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3">
+              <point x="0.0" y="-36.0" />
+              <point x="3438.0" y="702.0" />
+              <point x="1935.0" y="702.0" />
+              <point x="42.0" y="36.0" />
+            </edge>
+            <edge source="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.bladObjKoord" target="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3">
+              <point x="0.0" y="-36.0" />
+              <point x="2626.5" y="732.0" />
+              <point x="1914.0" y="732.0" />
+              <point x="21.0" y="36.0" />
+            </edge>
+            <edge source="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjFastigheter" target="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3">
+              <point x="0.0" y="-47.0" />
+              <point x="2106.0" y="752.0" />
+              <point x="1900.0" y="752.0" />
+              <point x="7.0" y="36.0" />
+            </edge>
+            <edge source="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjeAnteck" target="6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3">
+              <point x="0.0" y="-36.0" />
+              <point x="0.0" y="36.0" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="0.676791277258567" x="2298.0" y="842.0" />
+          <SelectedNodes>
+            <node>6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.BladObjektENTimDeb</node>
+          </SelectedNodes>
+          <Categories>
+            <Category>Key columns</Category>
+            <Category>Columns</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://6cfacdb4-5d47-4859-b85b-7b2ce07efa71/database/tempExcel/schema/dbo/table/FakturaMottagare" />
+    <entry file="das://6cfacdb4-5d47-4859-b85b-7b2ce07efa71/database/tempExcel/schema/dbo/table/BladObjPathDiaLöpnr" />
+    <entry file="uml://DATABASE/6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.Blad1ObjIDObjNamn">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>DATABASE</ID>
+          <OriginalElement>6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.Blad1ObjIDObjNamn</OriginalElement>
+          <nodes>
+            <node x="" y="">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.Blad1ObjIDObjNamn</node>
+            <node x="" y="">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="214.0" y="97.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Key columns</Category>
+            <Category>Columns</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://DATABASE/6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>DATABASE</ID>
+          <OriginalElement>6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3</OriginalElement>
+          <nodes>
+            <node x="" y="">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.TABLE:tempExcel.dbo.HelaSolen3</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="176.0" y="36.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Key columns</Category>
+            <Category>Columns</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://6cfacdb4-5d47-4859-b85b-7b2ce07efa71/database/tempExcel/schema/dbo/table/BladObjPathDiaLöp" />
+    <entry file="das://6cfacdb4-5d47-4859-b85b-7b2ce07efa71/database/tempExcel/schema/dbo/table/HelaSolen3" />
+    <entry file="file://$USER_HOME$/OneDrive/DeleteDupes.sql" />
+    <entry file="das://6cfacdb4-5d47-4859-b85b-7b2ce07efa71/database/tempExcel/schema/dbo/table/BladObjFastigheter" />
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/6cfacdb4-5d47-4859-b85b-7b2ce07efa71/console.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="6" selection-start-column="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://DATABASE/6cfacdb4-5d47-4859-b85b-7b2ce07efa71.VIEW:tempExcel.dbo.RejoinedHelaSolen">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>DATABASE</ID>
+          <OriginalElement>6cfacdb4-5d47-4859-b85b-7b2ce07efa71.VIEW:tempExcel.dbo.RejoinedHelaSolen</OriginalElement>
+          <nodes>
+            <node x="" y="">6cfacdb4-5d47-4859-b85b-7b2ce07efa71.VIEW:tempExcel.dbo.RejoinedHelaSolen</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="0.5387968613775065" x="153.0" y="554.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Key columns</Category>
+            <Category>Columns</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/b040e63f-6640-4041-9fc7-177156125630/console.sql">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/6cfacdb4-5d47-4859-b85b-7b2ce07efa71/console_1.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="7" selection-start-column="7" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/3c5c3876-0a17-4695-8af0-a036bbd1a8d6/console.sql">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="uml://DATABASE/6f5acbc7-c2be-4b8b-a77a-ea78581ca491.VIEW:master.dbo.MittVsEdpDubletter">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>DATABASE</ID>
+          <OriginalElement>6f5acbc7-c2be-4b8b-a77a-ea78581ca491.VIEW:master.dbo.MittVsEdpDubletter</OriginalElement>
+          <nodes>
+            <node x="" y="">6f5acbc7-c2be-4b8b-a77a-ea78581ca491.VIEW:master.dbo.MittVsEdpDubletter</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="88.0" y="58.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Key columns</Category>
+            <Category>Columns</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/table/asd">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="84b08ae7-b3ae-4531-8460-12f4483c1c65">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/table/asdg">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="84b08ae7-b3ae-4531-8460-12f4483c1c65">
+          <filtering>
+            <filter text="" />
+          </filtering>
+          <column-attributes>
+            <column name="%%physloc%%" enabled="false" position="-1" />
+          </column-attributes>
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbSrc:///251a7a66/6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/master/schema/dbo/view/MittVsEdpDubletter.sql" />
+    <entry file="file://$USER_HOME$/asd_2019_06_12_15_08_34.txt" />
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/master/schema/dbo/view/MittVsEdpDubletter">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="84b08ae7-b3ae-4531-8460-12f4483c1c65">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/master/schema/dbo/view/MittVsEdpEjskapadeObjekt">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="84b08ae7-b3ae-4531-8460-12f4483c1c65">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://DATABASE/6f5acbc7-c2be-4b8b-a77a-ea78581ca491.VIEW:master.dbo.ObjektIdRefRecTillsynsobjektID">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>DATABASE</ID>
+          <OriginalElement>6f5acbc7-c2be-4b8b-a77a-ea78581ca491.VIEW:master.dbo.ObjektIdRefRecTillsynsobjektID</OriginalElement>
+          <nodes>
+            <node x="" y="">6f5acbc7-c2be-4b8b-a77a-ea78581ca491.VIEW:master.dbo.ObjektIdRefRecTillsynsobjektID</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="119.0" y="58.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Key columns</Category>
+            <Category>Columns</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/table/BladObjPåkoppladFastighet">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="aaafe18e-3998-47ab-ba8d-f3fcebf22f4e">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbSrc:///251a7a66/6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/master/schema/dbo/routine/stringComparision.sql" />
+    <entry file="dbSrc:///251a7a66/6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/master/schema/dbo/view/ObjektIdRefRecTillsynsobjektID.sql" />
+    <entry file="dbSrc:///251a7a66/6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/master/schema/dbo/view/MittVsEdpAvlopsAnl.sql" />
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/master/schema/dbo/view/ObjektIdRefRecTillsynsobjektID">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="aaafe18e-3998-47ab-ba8d-f3fcebf22f4e">
+          <filtering>
+            <filter text="" />
+          </filtering>
+          <column-attributes>
+            <column name="recTillsynsobjektID" position="2" />
+            <column name="strObjektsNamn" position="1" />
+          </column-attributes>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Query4_2019_06_17_15_04_14.txt" />
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/table/4årsPåm2019.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="27" lean-forward="true" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/table/årsPåm2019COmpl">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="06843e88-b32b-41b5-aa83-58995bbaec6b">
+          <filtering>
+            <filter text="" />
+          </filtering>
+          <column-attributes>
+            <column name="%%physloc%%" enabled="false" position="-1" />
+          </column-attributes>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/master/schema/dbo/table/årsPåm2019Compl">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="06843e88-b32b-41b5-aa83-58995bbaec6b">
+          <filtering>
+            <filter text="" />
+          </filtering>
+          <column-attributes>
+            <column name="%%physloc%%" enabled="false" position="-1" />
+          </column-attributes>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/OneDrive/InsteadOfSheets.sql" />
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/table/Query4">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="06843e88-b32b-41b5-aa83-58995bbaec6b">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/6f5acbc7-c2be-4b8b-a77a-ea78581ca491/console_1.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="32" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/6f5acbc7-c2be-4b8b-a77a-ea78581ca491/console.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="50" selection-start-column="50" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/table/4årsPåm2019">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="06843e88-b32b-41b5-aa83-58995bbaec6b">
+          <filtering>
+            <filter text="" />
+          </filtering>
+          <column-attributes>
+            <column name="%%physloc%%" enabled="false" position="-1" />
+          </column-attributes>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/table/4årsPåmvår2019">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="06843e88-b32b-41b5-aa83-58995bbaec6b">
+          <filtering>
+            <filter text="" />
+          </filtering>
+          <column-attributes>
+            <column name="%%physloc%%" enabled="false" position="-1" />
+          </column-attributes>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/table/ÄrendeNr4års2019">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="06843e88-b32b-41b5-aa83-58995bbaec6b">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/OneDrive/InsteadOfSheets (1).sql" />
+    <entry file="file://$PROJECT_DIR$/InsteadOfSheets (1).sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-493">
+          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/table/årsPåm2019Compl">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="e2f3572f-b4c4-4a60-87fe-8897f9c17a1e">
+          <filtering />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/master/schema/dbo/view/MittVsEdpAvlopsAnl">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="e2f3572f-b4c4-4a60-87fe-8897f9c17a1e">
+          <filtering />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/6f5acbc7-c2be-4b8b-a77a-ea78581ca491/console_2.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="22" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/newConsept.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TillMinaMedelanden.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

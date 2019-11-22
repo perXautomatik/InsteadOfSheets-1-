@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="@localhost" uuid="6f5acbc7-c2be-4b8b-a77a-ea78581ca491">
+      <database-info product="Microsoft SQL Server" version="13.00.5026" jdbc-version="4.2" driver-name="Microsoft JDBC Driver 7.2 for SQL Server" driver-version="7.2.1.0" dbms="MSSQL" exact-version="13.0.5026" exact-driver-version="7.2">
+        <extra-name-characters>$#@</extra-name-characters>
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
+      <secret-storage>master_key</secret-storage>
+      <domain-auth>true</domain-auth>
+      <introspection-schemas>EDPVisionRegionGotlandAvlopp:@|master:dbo|tempExcel:@|tempdb:*</introspection-schemas>
+    </data-source>
+  </component>
+</project>
