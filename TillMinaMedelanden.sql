@@ -41,13 +41,7 @@ INSERT INTO master.dbo.RowNrByBeteckning(   fra,            POSTORT,            
                   FROM FracToDec8 AS theTab INNER JOIN FracToDec8 innerTable ON
                       theTab.BETECKNING = innerTable.BETECKNING and
                       --DUE TO sql treating null = null as unknown
-
-                       (case when theTab.NAMN is null then
-                       innerTable.NAMN is null
-                        when innerTable.NAMN is null then
-                        theTab.NAMN is null
-                        else
-                        theTab.NAMN = innerTable.NAMN end  );
+                        IIf(theTab.Namn is null, theTab.BETECKNING, theTab.Namn) = IIf(innerTable.Namn is null, innerTable.BETECKNING, innerTable.Namn);
 
 WITH
      FilterBad as (SELECT fra,POSTORT,POSTNUMMER,ADRESS,NAMN,BETECKNING,arndenr,PERSORGNR,RowNum
