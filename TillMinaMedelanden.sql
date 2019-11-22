@@ -22,11 +22,11 @@
 
 INSERT INTO master.dbo.stuffArenden(fra, POSTORT, POSTNUMMER, ADRESS, NAMN, BETECKNING,  arndenr, PERSORGNR)
 select
-    distinct						fra,POSTORT,  POSTNUMMER, ADRESS, NAMN, BETECKNING,  STUFF((SELECT ', ' + CAST(innerTable.arndenr AS nvarchar(50))
+    distinct						fra,POSTORT,  POSTNUMMER, ADRESS, NAMN, BETECKNING,  ltrim(STUFF((SELECT ', ' + CAST(innerTable.arndenr AS nvarchar(50))
 																											FROM FracToDec8 AS innerTable
 																												WHERE ressult.BETECKNING = innerTable.BETECKNING and
 																													IIf(ressult.Namn is null, ressult.BETECKNING, ressult.Namn) = IIf(innerTable.Namn is null, innerTable.BETECKNING, innerTable.Namn) --DUE TO sql treating null = null as unknown
-																															order by Beteckning FOR XML PATH('')),1,1,'') AS
+																															order by arndenr desc FOR XML PATH('')),1,1,'')) AS
 																							arndenr,PERSORGNR
     FROM FracToDec8 ressult
     group by namn, POSTORT, POSTNUMMER, ADRESS,PERSORGNR, BETECKNING, fra;
@@ -72,13 +72,13 @@ WITH
                                 POSTNUMMER,
                                 ADRESS,
                                 NAMN,
-                                STUFF((SELECT ', ' + CAST(innerTable.BETECKNING AS nvarchar(50))
+                                ltrim(STUFF((SELECT ', ' + CAST(innerTable.BETECKNING AS nvarchar(50))
                                        FROM filterSmallOwners AS innerTable
                                 where
                                     --TODO: fix this DUE TO sql treating null = null as unknown, the table will filter out all null names,
                                     ressult.Namn = innerTable.Namn
 
-                                    order by Beteckning FOR XML PATH ('')), 1, 1, '') AS Beteckning
+                                    order by Beteckning FOR XML PATH ('')), 1, 1, '')) AS Beteckning
                          from filterSmallOwners ressult
                          group by namn, POSTORT, POSTNUMMER, ADRESS, arndenr)
 
@@ -88,7 +88,7 @@ WITH
                           POSTORT,
                           POSTNUMMER,
                           ADRESS,
-                          STUFF((SELECT ', ' + CAST(innerTable.Namn AS nvarchar(50))
+                          ltrim(STUFF((SELECT ', ' + CAST(innerTable.Namn AS nvarchar(50))
                                  FROM valjLangstArendeNr AS innerTable
                                  
                           where
@@ -98,13 +98,16 @@ WITH
                         and
                         IIf(ressult.arndenr is null, ressult.BETECKNING, ressult.arndenr) = IIf(innerTable.arndenr is null, innerTable.BETECKNING, innerTable.arndenr)
 
-                                 order by Beteckning FOR XML PATH ('')), 1, 1, '') AS NAMN,
+                                 order by Beteckning FOR XML PATH ('')), 1, 1, '')) AS NAMN,
                           Beteckning
                    from valjLangstArendeNr ressult
                    group by Beteckning, POSTORT, POSTNUMMER, ADRESS, arndenr)
-   
 
- select * from stuffNamn order by Beteckning,arndenr
+
+select arndenr, POSTORT, POSTNUMMER, ADRESS, NAMN, Beteckning
+
+from stuffNamn where Beteckning is not null union select arndenr, POSTORT, POSTNUMMER, ADRESS, NAMN, Beteckning
+from filterSmallOwners where namn is null order by arndenr desc,Beteckning
    
    IF OBJECT_ID('master..#FracToDec8','U') IS NOT NULL
        DROP TABLE master.dbo.FracToDec8
