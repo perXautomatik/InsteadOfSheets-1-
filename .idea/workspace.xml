@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d1eb6535-42c0-430d-bf3d-568ef8000be8" name="Default Changelist" comment="" />
+    <list default="true" id="d1eb6535-42c0-430d-bf3d-568ef8000be8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TillMinaMedelanden.sql" beforeDir="false" afterPath="$PROJECT_DIR$/TillMinaMedelanden.sql" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +27,31 @@
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
         <item name="@localhost" type="feb32156:DbDataSourceImpl" />
       </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="tempExcel: database" type="ccb7ac2a:MsImplModel$Database" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="tempExcel: database" type="ccb7ac2a:MsImplModel$Database" />
+        <item name="dbo: schema" type="2865ee2e:MsImplModel$Schema" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="tempExcel: database" type="ccb7ac2a:MsImplModel$Database" />
+        <item name="dbo: schema" type="2865ee2e:MsImplModel$Schema" />
+        <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="tempExcel: database" type="ccb7ac2a:MsImplModel$Database" />
+        <item name="dbo: schema" type="2865ee2e:MsImplModel$Schema" />
+        <item name="views" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
     </expand>
     <select />
   </component>
@@ -34,29 +62,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/InsteadOfSheets (1).sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-459">
-              <caret line="24" column="38" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
+            <state relative-caret-position="305">
+              <caret line="20" column="36" lean-forward="true" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/newConsept.sql">
+        <entry file="file://$PROJECT_DIR$/TillMinaMedelanden.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="32" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
+            <state relative-caret-position="274">
+              <caret line="32" column="57" selection-start-line="32" selection-start-column="57" selection-end-line="32" selection-end-column="57" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/TillMinaMedelanden.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-288">
-              <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
+      <file pinned="false" current-in-tab="false">
+        <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/table/MY_TABLE">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state projectRestartId="34580d3f-ee23-4b18-a4b1-bdfed050d19a">
+              <filtering>
+                <filter text="" />
+              </filtering>
+              <column-attributes>
+                <column name="%%physloc%%" enabled="false" position="-1" />
+              </column-attributes>
             </state>
           </provider>
         </entry>
@@ -112,17 +145,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="InsteadOfSheets (1)" type="e2918438:DataGripProjectViewPane$1$1" />
-              <item name="InsteadOfSheets (1)" type="252d1985:DataGripProjectViewPane$1$1$1" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
+      <pane id="ProjectPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -207,10 +230,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Database" order="0" visible="true" weight="0.04904051" />
+      <window_info content_ui="combo" id="Database" order="0" visible="true" weight="0.3001066" />
       <window_info id="Favorites" order="1" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Database Console" order="0" visible="true" weight="0.58111113" />
+      <window_info active="true" anchor="bottom" id="Database Console" order="0" visible="true" weight="0.4888889" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.3288889" />
       <window_info anchor="bottom" id="Run" order="3" weight="0.3282313" />
@@ -229,7 +253,7 @@
       <window_info anchor="bottom" id="ANTLR Preview" order="16" />
       <window_info anchor="bottom" id="Code Cleaner" order="17" />
       <window_info anchor="bottom" id="Event Log" order="18" />
-      <window_info anchor="right" content_ui="combo" id="Project" order="0" visible="true" weight="0.019189766" />
+      <window_info anchor="right" content_ui="combo" id="Project" order="0" visible="true" weight="0.16684435" />
       <window_info anchor="right" id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Graph Database" order="2" />
       <window_info anchor="right" id="PsiViewer" order="3" />
@@ -249,9 +273,6 @@
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="das://6cfacdb4-5d47-4859-b85b-7b2ce07efa71/database/tempExcel/schema/dbo/table/BladObjRening" />
-    <entry file="das://6cfacdb4-5d47-4859-b85b-7b2ce07efa71/database/tempExcel/schema/dbo/table/BladObjTank" />
-    <entry file="das://6cfacdb4-5d47-4859-b85b-7b2ce07efa71/database/tempExcel/schema/dbo/table/BladObjVerksamhetsUtövare" />
     <entry file="das://6cfacdb4-5d47-4859-b85b-7b2ce07efa71/database/tempExcel/schema/dbo/table/BladObjÄrenden" />
     <entry file="das://6cfacdb4-5d47-4859-b85b-7b2ce07efa71/database/tempExcel/schema/dbo/table/Blad1ObjIDObjNamn" />
     <entry file="das://6cfacdb4-5d47-4859-b85b-7b2ce07efa71/database/tempExcel/schema/dbo/table/BladObjSlamskilj" />
@@ -495,38 +516,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/table/asd">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="84b08ae7-b3ae-4531-8460-12f4483c1c65">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/table/asdg">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="84b08ae7-b3ae-4531-8460-12f4483c1c65">
-          <filtering>
-            <filter text="" />
-          </filtering>
-          <column-attributes>
-            <column name="%%physloc%%" enabled="false" position="-1" />
-          </column-attributes>
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/table/asd" />
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/table/asdg" />
     <entry file="dbSrc:///251a7a66/6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/master/schema/dbo/view/MittVsEdpDubletter.sql" />
     <entry file="file://$USER_HOME$/asd_2019_06_12_15_08_34.txt" />
-    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/master/schema/dbo/view/MittVsEdpDubletter">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="84b08ae7-b3ae-4531-8460-12f4483c1c65">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/master/schema/dbo/view/MittVsEdpDubletter" />
     <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/master/schema/dbo/view/MittVsEdpEjskapadeObjekt">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state projectRestartId="84b08ae7-b3ae-4531-8460-12f4483c1c65">
@@ -601,28 +595,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/master/schema/dbo/table/årsPåm2019Compl">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="06843e88-b32b-41b5-aa83-58995bbaec6b">
-          <filtering>
-            <filter text="" />
-          </filtering>
-          <column-attributes>
-            <column name="%%physloc%%" enabled="false" position="-1" />
-          </column-attributes>
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/master/schema/dbo/table/årsPåm2019Compl" />
     <entry file="file://$USER_HOME$/OneDrive/InsteadOfSheets.sql" />
-    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/table/Query4">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state projectRestartId="06843e88-b32b-41b5-aa83-58995bbaec6b">
-          <filtering>
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/table/Query4" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/6f5acbc7-c2be-4b8b-a77a-ea78581ca491/console_1.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -671,13 +646,6 @@
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/OneDrive/InsteadOfSheets (1).sql" />
-    <entry file="file://$PROJECT_DIR$/InsteadOfSheets (1).sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-459">
-          <caret line="24" column="38" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/table/årsPåm2019Compl">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state projectRestartId="e2f3572f-b4c4-4a60-87fe-8897f9c17a1e">
@@ -699,6 +667,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="dbSrc:///82eee71d/6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/view/AdressComplettering.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="23" lean-forward="true" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/view/AdressComplettering">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="34580d3f-ee23-4b18-a4b1-bdfed050d19a">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://6f5acbc7-c2be-4b8b-a77a-ea78581ca491/database/tempExcel/schema/dbo/table/MY_TABLE">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="34580d3f-ee23-4b18-a4b1-bdfed050d19a">
+          <filtering>
+            <filter text="" />
+          </filtering>
+          <column-attributes>
+            <column name="%%physloc%%" enabled="false" position="-1" />
+          </column-attributes>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TillMinaMedelanden.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="32" column="57" selection-start-line="32" selection-start-column="57" selection-end-line="32" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/newConsept.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -706,10 +709,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TillMinaMedelanden.sql">
+    <entry file="file://$PROJECT_DIR$/InsteadOfSheets (1).sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-288">
-          <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
+        <state relative-caret-position="305">
+          <caret line="20" column="36" lean-forward="true" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
         </state>
       </provider>
     </entry>
