@@ -72,7 +72,7 @@ with inputFracted as (
                            PERSORGNR,
                            RowNum
                     from withRowNr
-                    where not (1 not in (RowNum, fra))
+                    where (RowNum = 1 AND fra = 1)
                       AND ('' in (postOrt, POSTNUMMER, Adress) OR Namn is null)),
 
      adressCompl as (select fra,
@@ -87,8 +87,9 @@ with inputFracted as (
                      from toComplete
                               left outer join tempExcel.dbo.AdressComplettering
                                               on AdressComplettering.arndenr = toComplete.arndenr)
---select * from adressCompl
-     --  union
+select *
+from adressCompl
+union
 select *
 from filterSmallOwnersBadAdress
 order by arndenr, RowNum
