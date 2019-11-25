@@ -33,46 +33,48 @@ with inputFracted as (
                 arndenr,
                 PERSORGNR,
                 RowNum
-         from (select fra,
-                      POSTORT,
-                      POSTNUMMER,
-                      ADRESS,
-                      NAMN,
-                      BETECKNING,
-                      arndenr,
-                      PERSORGNR,
-                      RowNum
-               from withRowNr
-               WHERE withRowNr.RowNum = 1) as oneEntry
-         union
-         select fra,
-                POSTORT,
-                POSTNUMMER,
-                ADRESS,
-                NAMN,
-                BETECKNING,
-                arndenr,
-                PERSORGNR,
-                RowNum
-         from (select fra,
-                      POSTORT,
-                      POSTNUMMER,
-                      ADRESS,
-                      NAMN,
-                      BETECKNING,
-                      arndenr,
-                      PERSORGNR,
-                      RowNum
-               from withRowNr as X
-               WHERE X.RowNum > 1
-                 and X.RowNum < 4
-                 AND fra > 0.3
-              ) as anyOtherEntry
-         where postOrt <> ''
-           AND POSTNUMMER <> ''
-           AND Adress <> ''
-           AND Namn is not null)
+         from (
+                  select fra,
+                         POSTORT,
+                         POSTNUMMER,
+                         ADRESS,
+                         NAMN,
+                         BETECKNING,
+                         arndenr,
+                         PERSORGNR,
+                         RowNum
+                  from withRowNr
+                  WHERE RowNum = 1
+                  union
+                  select fra,
+                         POSTORT,
+                         POSTNUMMER,
+                         ADRESS,
+                         NAMN,
+                         BETECKNING,
+                         arndenr,
+                         PERSORGNR,
+                         RowNum
+                  from withRowNr
+                  WHERE RowNum > 1
+                    and RowNum < 4
+                    AND fra > 0.3) as combined
+         where not ('' in (postOrt, POSTNUMMER, Adress)
+             OR Namn is null))
         ,
+     toComplete as (select fra,
+                           POSTORT,
+                           POSTNUMMER,
+                           ADRESS,
+                           NAMN,
+                           BETECKNING,
+                           arndenr,
+                           PERSORGNR,
+                           RowNum
+                    from withRowNr
+                    where not (1 not in (RowNum, fra))
+                      AND ('' in (postOrt, POSTNUMMER, Adress) OR Namn is null)),
+
      adressCompl as (select fra,
                             AdressComplettering.POSTORT,
                             AdressComplettering.POSTNUMMER,
@@ -82,23 +84,14 @@ with inputFracted as (
                             toComplete.arndenr,
                             PERSORGNR,
                             RowNum
-                     from (select fra,
-                                  POSTORT,
-                                  POSTNUMMER,
-                                  ADRESS,
-                                  NAMN,
-                                  BETECKNING,
-                                  arndenr,
-                                  PERSORGNR,
-                                  RowNum
-                           from withRowNr
-                           where RowNum = 1
-                             AND (postOrt = '' OR POSTNUMMER = '' OR Adress = '' OR Namn is null)) as toComplete
+                     from toComplete
                               left outer join tempExcel.dbo.AdressComplettering
                                               on AdressComplettering.arndenr = toComplete.arndenr)
+--select * from adressCompl
+     --  union
 select *
-from adressCompl
--- union(select *from filterSmallOwnersBadAdress)order by arndenr, RowNum
+from filterSmallOwnersBadAdress
+order by arndenr, RowNum
 
 
 
