@@ -1,5 +1,3 @@
-
-
    IF OBJECT_ID('tempdb..#TempWithIdentity') IS NOT NULL DROP TABLE #TempWithIdentity create table dbo.#TempWithIdentity
     (
         i          int not null identity (1,1) primary key,
@@ -12,18 +10,21 @@
         arndenr    varchar(255)
     )
 
+--select ROW_NUMBER() OVER(ORDER BY newid()) AS nrx, i, ANDEL, POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, arndenr from dbo.Generator_InputPlusGeofir
+
 SET IDENTITY_INSERT #TempWithIdentity ON;
 
 INSERT INTO dbo.#TempWithIdentity( i, ANDEL, POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, arndenr )
-	   SELECT MAX(TempWithIdentityx.nrx) AS i, MAX(ANDEL) AS ANDEL, POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, ärndenr AS arendenr
-	   FROM
-	   (
-		   SELECT ROW_NUMBER() OVER(
-		   ORDER BY NEWID()) AS nrx, *
-		   FROM tempExcel.dbo.InputPlusGeofir
-	   ) AS [TempWithIdentityx]
-	   GROUP BY POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, ärndenr;
-
+	   SELECT MAX(nrx) i, MAX(ANDEL) ANDEL, POSTORT, POSTNUMMER, adress, NAMN, BETECKNING,arendenr FROM (select
+                                                                                                            row_number() over (order by newid()) nrx,
+                                                                                                            cast(BETECKNING as varchar(100)) BETECKNING,
+                                                                                                            cast(ärndenr as varchar(100)) arendenr,
+                                                                                                            cast(andel as varchar(100)) andel,
+                                                                                                            cast(Namn as varchar(100)) Namn,
+                                                                                                            cast(Adress as varchar(100)) Adress,
+                                                                                                            cast(POSTNUMMER as varchar(100)) POSTNUMMER,
+                                                                                                            cast(postOrt as varchar(100)) postOrt
+                                                                                                            from dbo.Generator_InputPlusGeofir) z group by POSTORT, POSTNUMMER, adress, NAMN, BETECKNING,arendenr
 SET IDENTITY_INSERT #TempWithIdentity OFF;
 
 IF OBJECT_ID('tempdb..#del1') IS NOT NULL DROP TABLE #del1 CREATE TABLE dbo.#del1
@@ -95,7 +96,7 @@ INSERT INTO dbo.#d3AdressSplitt( i,adress,C_O,Adress2,PostOrt,postnr )
                                WHERE (c2.ADRESS = c1.ADRESS)
                                  and c2.Rn = 1
                                group by c2.ExtractedValuesFromNames FOR XML PATH ('')), 1, 0, '')
-                      else null end)
+        end)
          , Adress2 = (case
                           when (select max(c2.rn) from #splitAdressCTE c2 WHERE (c2.ADRESS = c1.ADRESS)) >= 4
                               then STUFF((SELECT '' + c2.ExtractedValuesFromNames + ' '
@@ -132,19 +133,8 @@ with
     filterSmallOwnersBadAdress as (select fra,C_O,POSTORT,POSTNUMMER,ADRESS,
                                           NAMN,Namn2,BETECKNING,arndenr,RowNum from (select fra,C_O,POSTORT,POSTNUMMER,ADRESS,NAMN,Namn2,BETECKNING,arndenr,RowNum from (select q.fra,q.C_O,q.POSTORT,q.POSTNUMMER,q.ADRESS,q.NAMN,q.Namn2,q.BETECKNING,q.arndenr,ROW_NUMBER() OVER ( PARTITION BY q.arndenr ORDER BY q.fra desc) RowNum from filterBadAdress as q INNER JOIN filterBadAdress thethree ON q.arndenr = thethree.arndenr and q.namn = thethree.namn) X WHERE X.RowNum = 1) as asdasd union select *from (select *from (select q.fra,q.C_O,q.POSTORT,q.POSTNUMMER,q.ADRESS,q.NAMN,q.Namn2,q.BETECKNING,q.arndenr,ROW_NUMBER() OVER ( PARTITION BY q.arndenr ORDER BY q.fra desc ) RowNum from filterBadAdress as q INNER JOIN filterBadAdress thethree ON q.arndenr = thethree.arndenr and q.namn = thethree.namn) X WHERE X.RowNum > 1 and X.RowNum < 4 AND fra > 0.3) as asdasdx)
 
-    select refx.Diarienr,qlx.BETECKNING,qlx.C_O,qlx.POSTORT, qlx.POSTNUMMER,qlx.ADRESS,qlx.NAMN, qlx.Namn2  from (select fra,
-                                                                                                                         C_O,
-                                                                                                                         POSTORT,
-                                                                                                                         POSTNUMMER,
-                                                                                                                         ADRESS,
-                                                                                                                         NAMN,
-                                                                                                                         Namn2,
-                                                                                                                         BETECKNING,
-                                                                                                                         arndenr
-                                                                                                                  from filterSmallOwnersBadAdress where POSTNUMMER <> '') as qlx
-    right outer join (select Diarienr from [tempExcel].[dbo].[FNRKIRDIARENR_FörUtskick]) as refx on
-    refx.Diarienr = qlx.arndenr
-
+    --select refx.Diarienr,qlx.BETECKNING,qlx.C_O,qlx.POSTORT, qlx.POSTNUMMER,qlx.ADRESS,qlx.NAMN, qlx.Namn2  from (select fra,C_O,POSTORT,POSTNUMMER,ADRESS,NAMN,Namn2,BETECKNING,arndenr from filterSmallOwnersBadAdress where POSTNUMMER <> '') as qlx right outer join (select Diarienr from [tempExcel].[dbo].[FNRKIRDIARENR_FörUtskick]) as refx on refx.Diarienr = qlx.arndenr
+	select * from GroupAdresses
 
 
 

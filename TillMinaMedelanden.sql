@@ -1,14 +1,16 @@
 with filterBadAdress as (
     select (SELECT master.dbo.FracToDec(andel)) 'fra',
-           FNR,
-           BETECKNING,
-           ärndenr                              'arndenr',
-           Namn,
-           Adress,
-           POSTNUMMER,
-           postOrt,
-           PERSORGNR
-    from tempExcel.dbo.InputPlusGeofir
+           CAST(FNR AS int)             as      FNR,
+           CAST(BETECKNING AS nvarchar) as      BETECKNING,
+           CAST(ärndenr AS nvarchar)            'arndenr',
+           CAST(Namn AS nvarchar)       as      Namn,
+           CAST(Adress AS nvarchar)     as      Adress,
+           CAST(POSTNUMMER AS nvarchar) as      POSTNUMMER,
+           CAST(postOrt AS nvarchar)    as      postOrt,
+           CAST(PERSORGNR AS nvarchar)  as      PERSORGNR
+    from
+         --tempExcel.
+        dbo.Generator_InputPlusGeofir
 ),
      filterSmallOwnersBadAdress as (
          select fra,
@@ -79,10 +81,10 @@ with filterBadAdress as (
                  AND postOrt <> '' AND POSTNUMMER <> '' AND Adress <> '' AND Namn is not null) as asdasdx)
         ,
      adressCompl as (select fra,
-                            AdressComplettering.POSTORT,
-                            AdressComplettering.POSTNUMMER,
-                            AdressComplettering.ADRESS,
-                            AdressComplettering.NAMN,
+                            Bootstrap_AdressComplettering.POSTORT,
+                            Bootstrap_AdressComplettering.POSTNUMMER,
+                            Bootstrap_AdressComplettering.ADRESS,
+                            Bootstrap_AdressComplettering.NAMN,
                             BETECKNING,
                             toComplete.arndenr,
                             PERSORGNR,
@@ -98,8 +100,8 @@ with filterBadAdress as (
                                   RowNum
                            from filterSmallOwnersBadAdress
                            where postOrt = '' OR POSTNUMMER = '' OR Adress = '' OR Namn is null) as toComplete
-                              left outer join tempExcel.dbo.AdressComplettering
-                                              on AdressComplettering.arndenr = toComplete.arndenr)
+                              left outer join tempExcel.dbo.Bootstrap_AdressComplettering
+                                              on Bootstrap_AdressComplettering.arndenr = toComplete.arndenr)
 select *
 from adressCompl
 union
