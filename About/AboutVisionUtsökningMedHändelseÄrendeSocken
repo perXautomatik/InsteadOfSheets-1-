@@ -1,0 +1,7 @@
+--IF OBJECT_ID('tempdb..#filterArendeWhomHasAnsokan') IS NOT NULL DROP TABLE #filterArendeWhomHasAnsokan --create table dbo.#filterArendeWhomHasAnsokan ( dianr              nvarchar(max), kir                nvarchar(max), dat                nvarchar(max), rikt               nvarchar(max), rub                nvarchar(max), HandelseText          nvarchar(max), has                nvarchar(max) );
+--IF OBJECT_ID (N'tempExcel.dbo.FnrToAdress', N'FN') IS NOT NULL
+--,[UA_UTADR4],--[UA_UTADR3],--[TNMARK],--[SAL_UTADR2],--[SAL_CO],--[NAMN_OMV],--[MNAMN],--[KORTNAMN_OMV],--[FNAMN],--[FAL_UTADR1],--[FAL_CO],--[ENAMN]
+--ifall att ägarbyte skett och gammla ägande inte updaterats, välj den minsta ägande
+--left outer join SenastInkommande on SenastInkommande.dianr = senasteHendelseOmInteText.dianr and senastRub = rub AND senastRub is not null
+--,HändelseOrt,ÄrendeHuvudkontakt, ärendepostNummer, ärendepostort,ärendeGatuadress
+--select * from [tempExcel].dbo.ÄrendensSenasteKonaktMedH
