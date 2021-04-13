@@ -48,7 +48,15 @@ with
 	    	nullif(a.strAerendeStatusPresent,@STATUSFILTER1) status1,
 	          nullif(a.strAerendeStatusPresent,@STATUSFILTER2) status2*/
 	    FROM
-	         (select STRDIARIENUMMER,STRFASTIGHETSBETECKNING,STRSOEKBEGREPP,STRFNRID,strLogKommentar,strAerendeStatusPresent,STRAERENDEMENING,RECAERENDEID from  VISIONARENDEN) va
+	         (select STRDIARIENUMMER,STRFASTIGHETSBETECKNING,STRSOEKBEGREPP,STRFNRID,strLogKommentar,strAerendeStatusPresent,STRAERENDEMENING,RECAERENDEID from  VISIONARENDEN
+	             Where
+	                   		      not( strAerendeStatusPresent =@STATUSFILTER1
+		               or
+		           strAerendeStatusPresent= @STATUSFILTER2
+		          )
+		and
+		      STRAERENDEMENING = @ARMENING
+	             ) va
 	    INNER JOIN #SOCKENLISTA ON LEFT(coalesce(nullif(va.STRFASTIGHETSBETECKNING, ''), va.STRSOEKBEGREPP), len(SOCKEN)) = SOCKEN
 	    LEFT OUTER JOIN
 	        (select RECAERENDEID, (case when strRubrik is null then @HandKat else strRubrik end) strRubrikx from VisionHandelser
@@ -56,11 +64,12 @@ with
 	              strRubrik like @HANDRUBRIK1 Or
 	              strRubrik like @HANDRUBRIK2 ) H
 	        ON va.RECAERENDEID = h.RECAERENDEID
-		Where va.STRAERENDEMENING = @ARMENING AND not( va.strAerendeStatusPresent =@STATUSFILTER1  or va.strAerendeStatusPresent= @STATUSFILTER2  )
-		and
+		Where
 	      		h.strRubrikx IS NULL
-	)
-    /*SELECT *  from k end drop table #toInsert
+	),
+	k2 as (SELECT *  from k)
+    /*
+      end drop table #toInsert
 */
    ,correctFnr as (select DIA, coalesce(KirFnr.Fnr,a.fnr) Fnr,coalesce(strAerendeStatusPresent,a.strLogKommentar)strLogKommentar   FROM k2 a LEFT OUTER JOIN KirFnr ON a.KIR = KirFnr.BETECKNING ) --vision has sometimes a internal nr instad of fnr in the fnrcolumn
   ,toInsert as (select strLogKommentar statuskommentar ,DIA,Fnr from correctFnr)
