@@ -5,7 +5,18 @@
 ;if object_id('tempExcel.dbo.VisionArenden') 	is null begin CREATE SYNONYM VisionArenden for 	  [admsql04].[EDPVisionRegionGotland].DBO.VWAEHAERENDE          end
 ;if object_id('tempExcel.dbo.KirFnr') 		is null begin CREATE SYNONYM KirFnr for 	  [GISDATA].[sde_geofir_gotland].[gng].FA_FASTIGHET             end
 ;if object_id('tempExcel.dbo.FasAdresser') 	is null begin CREATE SYNONYM FasAdresser for 	  [GISDATA].[sde_geofir_gotland].[gng].FASTIGHETSADRESS_IG      end
-;if object_id('tempExcel.dbo.VisionHandelser') 	is null begin CREATE SYNONYM VisionHandelser for  [admsql04].[EDPVisionRegionGotland].DBO.vwAehHaendelse 	END
+;if object_id('tempExcel.dbo.VisionHandelser') 	is null begin CREATE SYNONYM VisionHandelser for  [admsql04].[EDPVisionRegionGotland].DBO.vwAehHaendelse 	END;
+
+;IF object_id('TEMPDB..#toInsert') IS not null BEGIN
+    drop table #toInsert
+    end
+IF object_id('TEMPDB..#kalla') IS not null BEGIN
+drop table #kalla
+end
+IF object_id('TEMPDB..#fordig') IS not null BEGIN
+drop table #fordig
+end
+;
 
 declare @inputFnr dbo.KontaktUpgTableType;
 declare @arMening as VARCHAR(200) set @arMening = 'Klart vatten - information om avlopp';
@@ -18,8 +29,9 @@ set @handRubrik2 = N'Ansökan/anmälan om enskild cavloppsanläggning%';
 DECLARE	@HandKat as VARCHAR(50) set @HandKat = N'ANSÖKAN';
 declare @statusFilter1 as varchar(50) set @STATUSFILTER1 = 'Makulerat';
 declare @statusFilter2 as varchar(50) set @STATUSFILTER2 = 'Avslutat';
-
-
+;if object_id('tempdb..#ref') is null begin CREATE table #ref (dia VARCHAR(50) PRIMARY KEY );
+INSERT INTO #ref VALUES ('MBNV-2019-749'), ('MBNV-2019-750'), ('MBNV-2019-751'), ('MBNV-2019-752'), ('MBNV-2019-761'), ('MBNV-2019-762'), ('MBNV-2019-764'), ('MBNV-2019-765'), ('MBNV-2019-767'), ('MBNV-2019-770'), ('MBNV-2019-774'), ('MBNV-2019-775'), ('MBNV-2019-795'), ('MBNV-2019-799'), ('MBNV-2019-801'), ('MBNV-2019-803'), ('MBNV-2019-806'), ('MBNV-2019-812'), ('MBNV-2019-816'), ('MBNV-2019-817'), ('MBNV-2019-818'), ('MBNV-2019-821'), ('MBNV-2019-822'), ('MBNV-2019-823'), ('MBNV-2019-825'), ('MBNV-2019-827'), ('MBNV-2019-828'), ('MBNV-2019-829'), ('MBNV-2019-833'), ('MBNV-2019-835'), ('MBNV-2019-836'), ('MBNV-2019-837'), ('MBNV-2019-846'), ('MBNV-2019-856'), ('MBNV-2019-858'), ('MBNV-2019-863'), ('MBNV-2019-864'), ('MBNV-2019-875'), ('MBNV-2019-877'), ('MBNV-2019-879'), ('MBNV-2019-886'), ('MBNV-2019-892'), ('MBNV-2019-908'), ('MBNV-2019-911'), ('MBNV-2019-920'), ('MBNV-2019-923'), ('MBNV-2019-933'), ('MBNV-2019-934'), ('MBNV-2019-937'), ('MBNV-2019-952'), ('MBNV-2019-964'), ('MBNV-2019-1043'), ('MBNV-2019-1044'), ('MBNV-2019-1045'), ('MBNV-2019-1048'), ('MBNV-2019-1059'), ('MBNV-2019-1065'), ('MBNV-2019-1067'), ('MBNV-2019-1075'), ('MBNV-2019-1077'), ('MBNV-2019-1079'), ('MBNV-2019-1080'), ('MBNV-2019-1081'), ('MBNV-2019-1083'), ('MBNV-2019-1089'), ('MBNV-2019-1090'), ('MBNV-2019-1093'), ('MBNV-2019-1094'), ('MBNV-2019-1098'), ('MBNV-2019-1104'), ('MBNV-2019-1105'), ('MBNV-2019-1107'), ('MBNV-2019-1112'), ('MBNV-2019-1113'), ('MBNV-2019-1114'), ('MBNV-2019-1116'), ('MBNV-2019-1117'), ('MBNV-2019-1123'), ('MBNV-2019-1124'), ('MBNV-2019-1125'), ('MBNV-2019-1130'), ('MBNV-2019-1138'), ('MBNV-2019-1141'), ('MBNV-2019-1152'), ('MBNV-2019-1155'), ('MBNV-2019-1157'), ('MBNV-2019-1158'), ('MBNV-2019-1162'), ('MBNV-2019-1165'), ('MBNV-2019-1166'), ('MBNV-2019-1169'), ('MBNV-2019-1171'), ('MBNV-2019-1174'), ('MBNV-2019-1176'), ('MBNV-2019-1180'), ('MBNV-2019-1182'), ('MBNV-2019-1183'), ('MBNV-2019-1184'), ('MBNV-2019-1187'), ('MBNV-2019-1248'), ('MBNV-2019-1249'), ('MBNV-2019-1283'), ('MBNV-2019-1287'), ('MBNV-2019-1289'), ('MBNV-2019-1290'), ('MBNV-2019-1292'), ('MBNV-2019-1304'), ('MBNV-2019-1307'), ('MBNV-2019-1314'), ('MBNV-2019-1318'), ('MBNV-2019-1324'), ('MBNV-2019-1338'), ('MBNV-2019-1348'), ('MBNV-2019-1350'), ('MBNV-2019-1352'), ('MBNV-2019-1354'), ('MBNV-2019-1357'), ('MBNV-2019-1360'), ('MBNV-2019-1366'), ('MBNV-2019-1367'), ('MBNV-2019-1368'), ('MBNV-2019-1369'), ('MBNV-2019-1370'), ('MBNV-2019-1371'), ('MBNV-2019-1372'), ('MBNV-2019-1373'), ('MBNV-2019-1374'), ('MBNV-2019-1375'), ('MBNV-2019-1376'), ('MBNV-2019-1408'), ('MBNV-2019-1734'), ('MBNV-2019-1738'), ('MBNV-2019-1739'), ('MBNV-2020-709'), ('MBNV-2020-710'), ('MBNV-2020-711'), ('MBNV-2020-712'), ('MBNV-2020-713')
+end
 ;if object_id('tempdb..#SockenLista') is null begin CREATE table #SockenLista (socken NVARCHAR(50) NOT NULL PRIMARY KEY ) INSERT INTO #SockenLista VALUES
 --(N'Kräklingbo'),('Alskog'),('Lau'),(N'När'),('Burs'),('Sjonhem')
     ('Follingbo'),('Hejdeby'),('Lokrume'),('Martebo'),(N'Träkumla'),('Visby'),(N'Västerhejde')
@@ -50,9 +62,8 @@ with
 	)
     /*SELECT *  from k end drop table #toInsert
 */
-   ,correctFnr as (select DIA, coalesce(KirFnr.Fnr,a.fnr) Fnr,a.strLogKommentar FROM k a LEFT OUTER JOIN KirFnr ON a.KIR = KirFnr.BETECKNING ) --vision has sometimes a internal nr instad of fnr in the fnrcolumn
-  ,toInsert as (select strLogKommentar statuskommentar
-  ,DIA,Fnr from correctFnr)
+   ,correctFnr as (select DIA, coalesce(KirFnr.Fnr,a.fnr) Fnr,coalesce(strAerendeStatusPresent,a.strLogKommentar)strLogKommentar   FROM k2 a LEFT OUTER JOIN KirFnr ON a.KIR = KirFnr.BETECKNING ) --vision has sometimes a internal nr instad of fnr in the fnrcolumn
+  ,toInsert as (select strLogKommentar statuskommentar ,DIA,Fnr from correctFnr)
 
     --insert into @inputFnr (id,Diarienummer,Fnr,fastighet,HÄNDELSEDATUM ) --;if object_id('tempdb..#TRM') is null begin begin  TRANSACTION--SELECT * INTO #TRM from @INPUTFNR ;--END adressCorrecting = gisTable1 -- don't think the view of gisTable1 has 3 segments, so union is not nessessary.--    ip as (select fnr from @INPUTFNR),
 select *, GETDATE() inskdatum
@@ -60,9 +71,6 @@ into #toInsert
 from toInsert
 end
 ;
---drop table #toInsert
---drop table #kalla
---drop table #fordig
 
 --;if object_id('tempdb..#FulaAdresser') is null begin CREATE table #FulaAdresser (adress NVARCHAR NOT NULL PRIMARY KEY ) INSERT INTO #FulaAdresser VALUES('DALHEM HALLVIDE 119, HALFVEDE, 62256 DALHEM'), ('c/o LILIAN PETTERSSON, SANDA STENHUSE 310'), ('DALHEM GRANSKOGS 966'), ('GRANSKOGS DALHEM 966'), (N'GAMLA NORRBYVÄGEN 15, ÖSTRA TÄCKERÅKER, 13674 NORRBY'), (N'ÖSTRA TÄCKERÅKER GAMLA NORRBYVÄGEN 15'), (N'ALVA GUDINGS 328 VÅN 2, GAMLA SKOLAN, 62346 HEMSE'), ('DALHEM KAUNGS 538, DUNBODI, 62256 DALHEM'), ('HERTZBERGSGATE 3 A0360 OSLO NORGE'), ('DALHEM HALLVIDE 119, HALFVEDE'), ('OLAV M. TROVIKS VEI 500864 OSLO NORGE'), ('LORNSENSTR. 30DE-24105 KIEL TYSKLAND'), (N'FRÜLINGSSTRASSE 3882110 GERMENING TYSKLAND'), (N'c/o FÖRENINGEN GOTLANDSTÅGET HÄSSELBY 166'), ('c/o TRYGGVE PETTERSSON KAUNGS 524'), (N'c/o L. ANDERSSON DJURSTRÖMS VÄG 11'), (N'PRÄSTBACKEN 8'), ('HALLA BROE 105'), (N'GAMLA SKOLAN ALVA GUDINGS 328 VÅN 2')
 --end;
