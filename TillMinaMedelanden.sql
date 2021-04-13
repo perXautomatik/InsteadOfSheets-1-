@@ -51,20 +51,15 @@ with
 	         (select STRDIARIENUMMER,STRFASTIGHETSBETECKNING,STRSOEKBEGREPP,STRFNRID,strLogKommentar,strAerendeStatusPresent,STRAERENDEMENING,RECAERENDEID from  VISIONARENDEN) va
 	    INNER JOIN #SOCKENLISTA ON LEFT(coalesce(nullif(va.STRFASTIGHETSBETECKNING, ''), va.STRSOEKBEGREPP), len(SOCKEN)) = SOCKEN
 	    LEFT OUTER JOIN
-	        (select RECAERENDEID, strHaendelseIdentifiering, (case when strRubrik is null then @HandKat else strRubrik end) strRubrikx from VisionHandelser
+	        (select RECAERENDEID, (case when strRubrik is null then @HandKat else strRubrik end) strRubrikx from VisionHandelser
 	        WHERE  VisionHandelser.strHaendelseKategori = @HandKat or
 	              strRubrik like @HANDRUBRIK1 Or
 	              strRubrik like @HANDRUBRIK2 ) H
-	        ON va.STRDIARIENUMMER like h.strHaendelseIdentifiering + '%'
-		Where va.STRAERENDEMENING = @ARMENING AND
-		       va.strAerendeStatusPresent != @STATUSFILTER1
-		      and va.strAerendeStatusPresent != @STATUSFILTER2
+	        ON va.RECAERENDEID = h.RECAERENDEID
+		Where va.STRAERENDEMENING = @ARMENING AND not( va.strAerendeStatusPresent =@STATUSFILTER1  or va.strAerendeStatusPresent= @STATUSFILTER2  )
 		and
 	      		h.strRubrikx IS NULL
 	)
-	,k2 as (SELECT k.* from k
-	    --INNER JOIN #ref on #ref.DIA = k.DIA
-	    )
     /*SELECT *  from k end drop table #toInsert
 */
    ,correctFnr as (select DIA, coalesce(KirFnr.Fnr,a.fnr) Fnr,coalesce(strAerendeStatusPresent,a.strLogKommentar)strLogKommentar   FROM k2 a LEFT OUTER JOIN KirFnr ON a.KIR = KirFnr.BETECKNING ) --vision has sometimes a internal nr instad of fnr in the fnrcolumn
@@ -75,7 +70,6 @@ select *, GETDATE() inskdatum
 into #toInsert
 from toInsert
 end
-SELECT * FROM #toInsert
 ;
 
 --;if object_id('tempdb..#FulaAdresser') is null begin CREATE table #FulaAdresser (adress NVARCHAR NOT NULL PRIMARY KEY ) INSERT INTO #FulaAdresser VALUES('DALHEM HALLVIDE 119, HALFVEDE, 62256 DALHEM'), ('c/o LILIAN PETTERSSON, SANDA STENHUSE 310'), ('DALHEM GRANSKOGS 966'), ('GRANSKOGS DALHEM 966'), (N'GAMLA NORRBYVÄGEN 15, ÖSTRA TÄCKERÅKER, 13674 NORRBY'), (N'ÖSTRA TÄCKERÅKER GAMLA NORRBYVÄGEN 15'), (N'ALVA GUDINGS 328 VÅN 2, GAMLA SKOLAN, 62346 HEMSE'), ('DALHEM KAUNGS 538, DUNBODI, 62256 DALHEM'), ('HERTZBERGSGATE 3 A0360 OSLO NORGE'), ('DALHEM HALLVIDE 119, HALFVEDE'), ('OLAV M. TROVIKS VEI 500864 OSLO NORGE'), ('LORNSENSTR. 30DE-24105 KIEL TYSKLAND'), (N'FRÜLINGSSTRASSE 3882110 GERMENING TYSKLAND'), (N'c/o FÖRENINGEN GOTLANDSTÅGET HÄSSELBY 166'), ('c/o TRYGGVE PETTERSSON KAUNGS 524'), (N'c/o L. ANDERSSON DJURSTRÖMS VÄG 11'), (N'PRÄSTBACKEN 8'), ('HALLA BROE 105'), (N'GAMLA SKOLAN ALVA GUDINGS 328 VÅN 2')
@@ -223,6 +217,3 @@ from first
    	    coalesce(korrigerande.[personnr/Organisationnr],	FIRST.[personnr/Organisationnr]) = 	FIRST.[personnr/Organisationnr] AND
 	    coalesce(korrigerande.SOURCE,			FIRST.SOURCE) = 			FIRST.SOURCE) as c
 order by STATUSKOMMENTAR,POSTNR,dnr,ÄGARE,POSTORT,POSTADRESS
-;
---select * from VisionArenden Where STRAERENDEMENING = @ARMENING AND strAerendeStatusPresent != @STATUSFILTER1 and strAerendeStatusPresent != @STATUSFILTER2 ORDER BY recAerendeId desc
-
