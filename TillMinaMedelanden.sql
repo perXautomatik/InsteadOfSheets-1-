@@ -2,10 +2,10 @@
 
 --;if object_id('tempExcel.dbo.AdressCorrection') is null begin CREATE SYNONYM AdressCorrection FOR tempExcel.dbo.[20201112Flaggor ägaruppgifter-nyutskick]  	end
 --;if object_id('tempExcel.dbo.FastighetsLista') 	is null begin CREATE SYNONYM FastighetsLista for  tempExcel.dbo.[20201108ChristofferRäknarExcel]           	end
-;if object_id('tempExcel.dbo.VisionArenden') 	is null begin CREATE SYNONYM VisionArenden for 	  [admsql04].[EDPVisionRegionGotland].DBO.VWAEHAERENDE          end
+--;if object_id('tempExcel.dbo.[admsql04].[EDPVisionRegionGotland].DBO.VWAEHAERENDE') 	is null begin CREATE SYNONYM [admsql04].[EDPVisionRegionGotland].DBO.VWAEHAERENDE for 	  [admsql04].[EDPVisionRegionGotland].DBO.VWAEHAERENDE          end
 ;if object_id('tempExcel.dbo.KirFnr') 		is null begin CREATE SYNONYM KirFnr for 	  [GISDATA].[sde_geofir_gotland].[gng].FA_FASTIGHET             end
 ;if object_id('tempExcel.dbo.FasAdresser') 	is null begin CREATE SYNONYM FasAdresser for 	  [GISDATA].[sde_geofir_gotland].[gng].FASTIGHETSADRESS_IG      end
-;if object_id('tempExcel.dbo.VisionHandelser') 	is null begin CREATE SYNONYM VisionHandelser for  [admsql04].[EDPVisionRegionGotland].DBO.vwAehHaendelse 	END;
+--;if object_id('tempExcel.dbo.[admsql04].[EDPVisionRegionGotland].DBO.vwAehHaendelse') 	is null begin CREATE SYNONYM [admsql04].[EDPVisionRegionGotland].DBO.vwAehHaendelse for  [admsql04].[EDPVisionRegionGotland].DBO.vwAehHaendelse 	END;
 
 ;IF object_id('TEMPDB..#toInsert') IS not null BEGIN
     drop table #toInsert
@@ -48,19 +48,14 @@ with
 	    	nullif(a.strAerendeStatusPresent,@STATUSFILTER1) status1,
 	          nullif(a.strAerendeStatusPresent,@STATUSFILTER2) status2*/
 	    FROM
-	         (select STRDIARIENUMMER,STRFASTIGHETSBETECKNING,STRSOEKBEGREPP,STRFNRID,strLogKommentar,strAerendeStatusPresent,STRAERENDEMENING,RECAERENDEID from  VISIONARENDEN
+	         (select STRDIARIENUMMER,STRFASTIGHETSBETECKNING,STRSOEKBEGREPP,STRFNRID,strLogKommentar,strAerendeStatusPresent,STRAERENDEMENING,RECAERENDEID from  [admsql04].[EDPVisionRegionGotland].DBO.VWAEHAERENDE
 	             Where
-	                   		      not( strAerendeStatusPresent =@STATUSFILTER1
-		               or
-		           strAerendeStatusPresent= @STATUSFILTER2
-		          )
-		and
-		      STRAERENDEMENING = @ARMENING
+	                not( strAerendeStatusPresent =@STATUSFILTER1 or strAerendeStatusPresent= @STATUSFILTER2) and STRAERENDEMENING = @ARMENING
 	             ) va
 	    INNER JOIN #SOCKENLISTA ON LEFT(coalesce(nullif(va.STRFASTIGHETSBETECKNING, ''), va.STRSOEKBEGREPP), len(SOCKEN)) = SOCKEN
 	    LEFT OUTER JOIN
-	        (select RECAERENDEID, (case when strRubrik is null then @HandKat else strRubrik end) strRubrikx from VisionHandelser
-	        WHERE  VisionHandelser.strHaendelseKategori = @HandKat or
+	        (select RECAERENDEID, (case when strRubrik is null then @HandKat else strRubrik end) strRubrikx from [admsql04].[EDPVisionRegionGotland].DBO.vwAehHaendelse q
+	        WHERE  q.strHaendelseKategori = @HandKat or
 	              strRubrik like @HANDRUBRIK1 Or
 	              strRubrik like @HANDRUBRIK2 ) H
 	        ON va.RECAERENDEID = h.RECAERENDEID
