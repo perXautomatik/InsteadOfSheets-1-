@@ -7,21 +7,18 @@ if object_id('tempdb..#kalla') is null begin
     if object_id('tempdb..#fordig') is not null begin drop table #FORDIG END;
 with
     COLUMNPROCESSBADNESSSCORE AS (   SELECT FNR , org , ANDEL , namn , INSKDATUM , adress ,  POSTORT ,  POSTNR , 'geosecma' src
-    , ((CASE WHEN namn IS NULL THEN 1 ELSE 0 END) + (CASE WHEN postnr IS NULL THEN 1 ELSE 0 END) + (CASE WHEN postort IS NULL THEN 1 ELSE 0 END)
-	+ (CASE WHEN adress IS NULL THEN 1 ELSE 0 END) + (CASE WHEN org is NULL THEN 1 ELSE 0 END))    BADNESS
+    , ((IIF(namn IS NULL, 1, 0)) + (IIF(postnr IS NULL, 1, 0)) + (IIF(postort IS NULL, 1, 0))
+	+ (IIF(adress IS NULL, 1, 0)) + (IIF(org is NULL, 1, 0))) BADNESS
 	FROM (SELECT namn, org, FNR, ANDEL, INSKDATUM, ADRESS
-	    , nullif(CASE WHEN postnrAvskFinns THEN substring(POSTNRPOSTORT, postNrAvsk + 1, LEN(POSTNRPOSTORT)) END,'') POSTORT
-	    , nullif(CASE WHEN postnrAvskFinns THEN left(POSTNRPOSTORT, postNrAvsk - 1) END,'') POSTNR
-	    FROM (select *, postNrAvsk > 0 as postnrAvskFinns from (
+	    , nullif(CASE WHEN postNrAvsk > 0 THEN substring(POSTNRPOSTORT, postNrAvsk + 1, LEN(POSTNRPOSTORT)) END,'') POSTORT
+	    , nullif(CASE WHEN postNrAvsk > 0 THEN left(POSTNRPOSTORT, postNrAvsk - 1) END,'') POSTNR
+	    FROM (select * from (
 	        select *,charindex(' ', POSTNRPOSTORT) postNrAvsk from
 		 (SELECT namn , org, FNR, ANDEL, INSKDATUM
-		 , nullif(CASE WHEN adressKommaFinns THEN
-		     	substring(ADRESS, adressKomma + 2, LEN(ADRESS))
-		    		 Else concat(POSTNR,' ',POSTORT) END ,'')
+		 , nullif(IIF(adressKommaFinns, substring(ADRESS, adressKomma + 2, LEN(ADRESS)),
+			      concat(POSTNR, ' ', POSTORT)), '')
 		     POSTNRPOSTORT
-		 , nullif(CASE WHEN ADRESSKOMMAFINNS THEN
-		     	left(ADRESS, adressKomma - 1)
-		     		else ADRESS END,'')
+		 , nullif(IIF(ADRESSKOMMAFINNS, left(ADRESS, adressKomma - 1), ADRESS), '')
 		     ADRESS
 		 FROM (select *,ADRESSKOMMA > 0 AND POSTORT IS NULL AND POSTNR IS NULL adresskommaFinns from (
 		     select *,charindex(',', ADRESS) adressKomma from (
