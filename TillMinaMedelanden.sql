@@ -1,11 +1,5 @@
---hämta ärendenr från vision--drop TABLE #ALIAS--drop table #PATO
+:r "C:\Users\crbk01\.DataGrip2019.3\config\projects\Kv-Utsökning\TillMinaMedelanden\synonyms.sql";
 
---;if object_id('tempExcel.dbo.AdressCorrection') is null begin CREATE SYNONYM AdressCorrection FOR tempExcel.dbo.[20201112Flaggor ägaruppgifter-nyutskick]  	end
---;if object_id('tempExcel.dbo.FastighetsLista') 	is null begin CREATE SYNONYM FastighetsLista for  tempExcel.dbo.[20201108ChristofferRäknarExcel]           	end
---;if object_id('tempExcel.dbo.[admsql04].[EDPVisionRegionGotland].DBO.VWAEHAERENDE') 	is null begin CREATE SYNONYM [admsql04].[EDPVisionRegionGotland].DBO.VWAEHAERENDE for 	  [admsql04].[EDPVisionRegionGotland].DBO.VWAEHAERENDE          end
-;if object_id('tempExcel.dbo.KirFnr') 		is null begin CREATE SYNONYM KirFnr for 	  [GISDATA].[sde_geofir_gotland].[gng].FA_FASTIGHET             end
-;if object_id('tempExcel.dbo.FasAdresser') 	is null begin CREATE SYNONYM FasAdresser for 	  [GISDATA].[sde_geofir_gotland].[gng].FASTIGHETSADRESS_IG      end
---;if object_id('tempExcel.dbo.[admsql04].[EDPVisionRegionGotland].DBO.vwAehHaendelse') 	is null begin CREATE SYNONYM [admsql04].[EDPVisionRegionGotland].DBO.vwAehHaendelse for  [admsql04].[EDPVisionRegionGotland].DBO.vwAehHaendelse 	END;
 
 ;IF object_id('TEMPDB..#toInsert') IS not null BEGIN
     drop table #toInsert
@@ -142,7 +136,8 @@ with
 			 ) innerTemp
 		     ) SRC) src)q
 	        ) innerTemp2 ) SPLITADRESS) ADRESSSPLITTER)
-    , rest AS (SELECT Z.FNR, null ORG, 		null ANDEL,null NAMN,  null  co, null ADRESS, null  adr2, null POSTNR, null POSTORT, null SRC from COLUMNPROCESSBADNESSSCORE z WHERE BADNESS > 1) --, rest as (SELECT * from ip except (SELECT fnr from SRC1LAGFARa))
+    , rest AS (SELECT Z.FNR, null ORG, 		null ANDEL,null NAMN,  null  co, null ADRESS, null  adr2, null POSTNR, null POSTORT, null SRC from COLUMNPROCESSBADNESSSCORE z WHERE BADNESS > 1)
+     --, rest as (SELECT * from ip except (SELECT fnr from SRC1LAGFARa))
     , SRC1LAGFARa AS (SELECT Z.FNR, Z.ORG, 	Z.ANDEL,Z.NAMN,  '' co, Z.ADRESS, '' adr2, Z.POSTNR, Z.POSTORT, SRC FROM COLUMNPROCESSBADNESSSCORE z WHERE BADNESS < 2)
 
 SELECT * into #kalla from SRC1LAGFARa union all SELECT *from rest;
