@@ -1,11 +1,11 @@
 
 
---drop table #fordig
-if object_id('tempdb..#fordig') is null begin
+--drop table ##fordig
+if object_id('tempdb..##fordig') is null begin
     BEGIN TRANSACTION;
 WITH
-    SRC1LAGFARa as (SELECT * from #KALLA where src is not null)
-    ,rest as (SELECT fnr from #KALLA WHERE src is null)
+    SRC1LAGFARa as (SELECT * from ##KALLA where src is not null)
+    ,rest as (SELECT fnr from ##KALLA WHERE src is null)
 
     , s1 as (select z.FNR,	PERSORGNR, z.andel,z.NAMN, FAL_CO, 		FAL_UTADR1, FAL_UTADR2, FAL_POSTNR, FAL_POSTORT , 	'lagfart' SRC FROM  [GISDATA].SDE_GEOFIR_GOTLAND.GNG.FA_LAGFART_V2 Z INNER JOIN REST IP ON IP.FNR = Z.FNR 	WHERE coalesce(nullif(FAL_CO,''), nullif(FAL_UTADR1,''), nullif(FAL_UTADR2,''), nullif(FAL_POSTNR,''), nullif(FAL_POSTORT,'')) IS NOT NULL)
     , s2 as (SELECT z.FNR,	PERSORGNR, z.andel,z.NAMN, SAL_CO, 		SAL_UTADR1, SAL_UTADR2, SAL_POSTNR, SAL_POSTORT , 	'lagfart' SRC  FROM [GISDATA].SDE_GEOFIR_GOTLAND.GNG.FA_LAGFART_V2 Z INNER JOIN REST IP ON IP.FNR = Z.FNR	WHERE coalesce(nullif(SAL_CO,''), nullif(SAL_UTADR1,''), nullif(SAL_UTADR2,''), nullif(SAL_POSTNR,''), nullif(SAL_POSTORT,'')) IS NOT NULL)
@@ -26,5 +26,5 @@ WITH
 	     , ltrim(replace(replace(ltrim(CONCAT(CASE WHEN FAL_POSTNR IS NULL THEN FAL_CO
 			     ELSE nullif('c/o ' + FAL_CO + ', ', 'c/o , ')END, FAL_UTADR1, ' ', FAL_UTADR2, ', ', FAL_POSTNR, ' ', FAL_POSTORT)), '  ', ' '), ' , ', ', ')) ADRESS
 	 , FAL_POSTORT   POSTORT, FAL_POSTNR POSTNR, SRC SOURCE FROM  [3toOneUnion2])
-SELECT * into #fordig from FARDIG
+SELECT * into ##fordig from FARDIG
         end ;

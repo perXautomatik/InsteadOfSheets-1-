@@ -8,7 +8,7 @@
            CAST(POSTNUMMER AS nvarchar) as      POSTNUMMER,
            CAST(postOrt AS nvarchar)    as      postOrt,
            CAST(PERSORGNR AS nvarchar)  as      PERSORGNR
-    into #input
+    into ##input
     from
          --tempExcel.
         dbo.Generator_InputPlusGeofir

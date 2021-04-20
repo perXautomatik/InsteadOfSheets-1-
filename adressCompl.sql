@@ -2,7 +2,7 @@
 :r TillMinaMedelanden/CreateFilterSmallAgare.sql
 
 with
-    inputX as (select fra, POSTORT, POSTNUMMER, ADRESS, NAMN, BETECKNING, arndenr, PERSORGNR, RowNum from #filterSmallOwnersBadAdress)
+    inputX as (select fra, POSTORT, POSTNUMMER, ADRESS, NAMN, BETECKNING, arndenr, PERSORGNR, RowNum from ##filterSmallOwnersBadAdress)
    ,ShooHornTable as (select * from tempExcel.dbo.Bootstrap_AdressComplettering)
 ,noNeedToComplete as (select *from inputX where postOrt <> '' AND POSTNUMMER <> '' AND Adress <> '' AND Namn is not null)
 ,toComplete as (select * from inputX where postOrt = '' OR POSTNUMMER = '' OR Adress = '' OR Namn is null)

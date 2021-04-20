@@ -1,4 +1,4 @@
-IF OBJECT_ID('tempdb..#TempWithIdentity') IS NOT NULL DROP TABLE #TempWithIdentity create table dbo.#TempWithIdentity
+IF OBJECT_ID('tempdb..##TempWithIdentity') IS NOT NULL DROP TABLE ##TempWithIdentity create table dbo.##TempWithIdentity
     (
         i          int not null identity (1,1) primary key,
         POSTORT    varchar(255),
@@ -12,4 +12,4 @@ IF OBJECT_ID('tempdb..#TempWithIdentity') IS NOT NULL DROP TABLE #TempWithIdenti
 
 --select ROW_NUMBER() OVER(ORDER BY newid()) AS nrx, i, ANDEL, POSTORT, POSTNUMMER, adress, NAMN, BETECKNING, arndenr from dbo.Generator_InputPlusGeofir
 
-SET IDENTITY_INSERT #TempWithIdentity ON;
+SET IDENTITY_INSERT ##TempWithIdentity ON;

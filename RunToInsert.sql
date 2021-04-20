@@ -11,7 +11,7 @@ DECLARE	@HandKat as VARCHAR(50) set @HandKat = N'ANSÖKAN';
 declare @statusFilter1 as varchar(50) set @STATUSFILTER1 = 'Makulerat';
 declare @statusFilter2 as varchar(50) set @STATUSFILTER2 = 'Avslutat';
 
-if object_id('tempdb..#toInsert') is null begin
+if object_id('tempdb..##toInsert') is null begin
 begin TRANSACTION;
 with
     --joinX as (select * from [admsql04].[EDPVisionRegionGotland].DBO.VWAEHAERENDE INNER join FastighetsLista ON coalesce(nullif([admsql04].[EDPVisionRegionGotland].DBO.VWAEHAERENDE.strFastighetsbeteckning,''),strSoekbegrepp) = FastighetsLista.FASTIGHET),
@@ -26,7 +26,7 @@ with
 	             Where
 	                not( strAerendeStatusPresent =@STATUSFILTER1 or strAerendeStatusPresent= @STATUSFILTER2) and STRAERENDEMENING = @ARMENING
 	             ) va
-	    INNER JOIN #SOCKENLISTA ON LEFT(coalesce(nullif(va.STRFASTIGHETSBETECKNING, ''), va.STRSOEKBEGREPP), len(SOCKEN)) = SOCKEN
+	    INNER JOIN ##SOCKENLISTA ON LEFT(coalesce(nullif(va.STRFASTIGHETSBETECKNING, ''), va.STRSOEKBEGREPP), len(SOCKEN)) = SOCKEN
 	    LEFT OUTER JOIN
 	        (select RECAERENDEID, (case when strRubrik is null then @HandKat else strRubrik end) strRubrikx from [admsql04].[EDPVisionRegionGotland].DBO.vwAehHaendelse q
 	        WHERE  q.strHaendelseKategori = @HandKat or
@@ -40,7 +40,7 @@ with
      ,exluded as (
          select p.DIA,p.KIR,p.FNR,p.strAerendeStatusPresent,p.strLogKommentar from (SELECT K2.*, coalesce(T.DIA, T.FAS) X
 		  FROM K2
-		      LEFT OUTER JOIN #EXCLUDED T
+		      LEFT OUTER JOIN ##EXCLUDED T
 		      ON
 			      coalesce(T.DIA, T.FAS) = K2.DIA
 			      OR
@@ -51,9 +51,9 @@ with
    ,correctFnr as (select DIA, coalesce(KirFnr.Fnr,a.fnr) Fnr,coalesce(a.strLogKommentar,strAerendeStatusPresent) as strLogKommentar   FROM exluded a LEFT OUTER JOIN KirFnr ON a.KIR = KirFnr.BETECKNING ) --vision has sometimes a internal nr instad of fnr in the fnrcolumn
   ,toInsert as (select strLogKommentar statuskommentar ,DIA,Fnr from correctFnr)
 
-    --insert into @inputFnr (id,Diarienummer,Fnr,fastighet,HÄNDELSEDATUM ) --;if object_id('tempdb..#TRM') is null begin begin  TRANSACTION--SELECT * INTO #TRM from @INPUTFNR ;--END adressCorrecting = gisTable1 -- don't think the view of gisTable1 has 3 segments, so union is not nessessary.--    ip as (select fnr from @INPUTFNR),
+    --insert into @inputFnr (id,Diarienummer,Fnr,fastighet,HÄNDELSEDATUM ) --;if object_id('tempdb..##TRM') is null begin begin  TRANSACTION--SELECT * INTO ##TRM from @INPUTFNR ;--END adressCorrecting = gisTable1 -- don't think the view of gisTable1 has 3 segments, so union is not nessessary.--    ip as (select fnr from @INPUTFNR),
 select *, GETDATE() inskdatum
-into #toInsert
+into ##toInsert
 from toInsert
 end
 ;

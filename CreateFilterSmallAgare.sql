@@ -1,6 +1,6 @@
-WITH filterBadAdress as (SELECT q.fra, q.POSTORT, q.POSTNUMMER, q.ADRESS, q.NAMN, q.BETECKNING, q.arndenr, q.PERSORGNR,* from #input q)
+WITH filterBadAdress as (SELECT q.fra, q.POSTORT, q.POSTNUMMER, q.ADRESS, q.NAMN, q.BETECKNING, q.arndenr, q.PERSORGNR,* from ##input q)
  select fra, POSTORT, POSTNUMMER, ADRESS, NAMN, BETECKNING, arndenr, PERSORGNR, RowNum
- into #filterSmallOwnersBadAdress
+ into ##filterSmallOwnersBadAdress
  from (select fra, POSTORT, POSTNUMMER, ADRESS, NAMN, BETECKNING, arndenr, PERSORGNR, RowNum
        from (select q.fra, q.POSTORT, q.POSTNUMMER, q.ADRESS, q.NAMN, q.BETECKNING, q.arndenr, q.PERSORGNR,
 		    ROW_NUMBER() OVER ( PARTITION BY q.arndenr ORDER BY q.fra desc) RowNum

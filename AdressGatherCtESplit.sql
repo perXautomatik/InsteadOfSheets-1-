@@ -1,10 +1,10 @@
 :r TillMinaMedelanden/header.sql
 with
-    TrimValues as (select #d3AdressSplitt.i,C_O,ltrim(Adress2) as adress,ltrim(#d3AdressSplitt.PostOrt) as PostOrt2,#del2.POSToRT,ltrim(postnr) as postnr,POSTNUMMER,#d3AdressSplitt.adress as orgAdrr from #d3AdressSplitt join #del2 on #d3AdressSplitt.i = #del2.i),
+    TrimValues as (select ##d3AdressSplitt.i,C_O,ltrim(Adress2) as adress,ltrim(##d3AdressSplitt.PostOrt) as PostOrt2,##del2.POSToRT,ltrim(postnr) as postnr,POSTNUMMER,##d3AdressSplitt.adress as orgAdrr from ##d3AdressSplitt join ##del2 on ##d3AdressSplitt.i = ##del2.i),
 
     fixPostOrt as (select i,C_O,adress,PostOrtZ = case when PostOrt2 like '%' + ress.POSToRT then ress.POSToRT else case when PostOrt2 is null then postort else PostOrt2 end end,postnr =case when PostOrt2 like cast(POSTNUMMER as varchar(255)) + '%' then cast(POSTNUMMER as varchar(255))else case when POSTNUMMER is null then postnr else cast(POSTNUMMER as varchar(255)) end end,ress.POSToRT,orgAdrr from (select i,C_O,adress,cast(PostOrt2 as varchar(255)) as PostOrt2,POSToRT,postnr,POSTNUMMER,orgAdrr from TrimValues) as ress),
 
-    GroupAdresses as (select C_O,adress,PostOrtZ as postort,postnr as POSTNUMMER,max(andel) as andel,namn,BETECKNING,arndenr from #del1 join fixPostOrt on #del1.i = fixPostOrt.i group by C_O, adress, PostOrtZ, postnr,  namn, BETECKNING, arndenr),
+    GroupAdresses as (select C_O,adress,PostOrtZ as postort,postnr as POSTNUMMER,max(andel) as andel,namn,BETECKNING,arndenr from ##del1 join fixPostOrt on ##del1.i = fixPostOrt.i group by C_O, adress, PostOrtZ, postnr,  namn, BETECKNING, arndenr),
 
     ParaMakeMaka as (select ANDEL as justForVisual,POSTORT,C_O,POSTNUMMER,ADRESS,NAMN,(select top 1 namn from GroupAdresses as x where x.BETECKNING = GroupAdresses.BETECKNING AND x.ADRESS = GroupAdresses.ADRESS and x.NAMN <> GroupAdresses.NAMN) as Namn2,BETECKNING,arndenr from GroupAdresses),
 
