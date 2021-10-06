@@ -1,9 +1,0 @@
---closing session
--- Use the cookie in the REVERT statement.
-DECLARE @cookie VARBINARY(8000);
--- Set the cookie value to the one from the SELECT @cookie statement.
-SET @cookie = value select top 1 col1 from cookie
-REVERT WITH COOKIE = @cookie;
--- Verify the context switch reverted.
-SELECT SUSER_NAME(), USER_NAME();
-GO
